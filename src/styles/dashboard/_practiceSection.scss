@@ -1,0 +1,43 @@
+.practice-section {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .practice-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .practice-header {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr;
+    padding: 0.75rem 0;
+    font-weight: 600;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.875rem;
+  }
+
+  .practice-footer {
+    text-align: right;
+    margin-top: 1rem;
+    a {
+      font-size: 0.875rem;
+      color: #178a7b;
+      font-weight: 500;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

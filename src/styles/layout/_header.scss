@@ -1,0 +1,31 @@
+.header {
+  background: white;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e7eb;
+
+  .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .user {
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #ccc;
+    }
+  }
+}

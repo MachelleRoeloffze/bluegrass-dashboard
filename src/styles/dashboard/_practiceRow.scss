@@ -1,0 +1,32 @@
+.practice-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr;
+  align-items: center;
+  font-size: 0.875rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f1f1f1;
+
+  .status-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .action-cell {
+    display: flex;
+    gap: 0.5rem;
+
+    .icon-btn {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      color: #4b5563;
+
+      &:hover {
+        color: #111;
+      }
+    }
+  }
+}

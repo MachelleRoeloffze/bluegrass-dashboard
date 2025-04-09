@@ -2,6 +2,7 @@
 @use "utils/mixins" as *;
 
 @use "base/typography";
+@use "base/icons";
 
 @use "layout/dashboard";
 @use "layout/header";
@@ -10,9 +11,10 @@
 @use "dashboard/statCard";
 @use "dashboard/practiceCard";
 @use "dashboard/practiceRow";
+@use "dashboard/practiceSection";
 @use "dashboard/pieCard";
+@use "dashboard/pieSection";
 
-@use "ui/badge";
 @use "ui/card";
 @use "ui/icon";
 @use "ui/toggle";

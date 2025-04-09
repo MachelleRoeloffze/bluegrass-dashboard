@@ -1,20 +1,24 @@
+@use "../utils/mixins" as *;
+
 .header {
   background: white;
-  padding: 1rem 2rem;
+  padding: 16px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #e5e7eb;
 
   .title {
-    font-size: 1.25rem;
-    font-weight: 600;
+    @include subheading;
+
+    color: #374151;
   }
 
   .actions {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 12px;
+    margin-left: auto;
 
     .user {
       font-weight: 500;

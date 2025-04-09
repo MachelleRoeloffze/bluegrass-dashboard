@@ -1,8 +1,70 @@
 .ui-icon {
-  background-color: #f4f6f9;
-  border-radius: 50%;
-  padding: 0.75rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  background-color: #e4f7f9;
+
+  i,
+  svg,
+  img {
+    font-size: 32px;
+    object-fit: contain;
+  }
+
+  &--small {
+    width: 24px;
+    height: 24px;
+
+    i,
+    svg,
+    img {
+      font-size: 16px;
+    }
+  }
+
+  &--medium {
+    width: 40px;
+    height: 40px;
+
+    i,
+    svg,
+    img {
+      font-size: 20px;
+    }
+  }
+
+  &--large {
+    width: 64px;
+    height: 64px;
+
+    i,
+    svg,
+    img {
+      font-size: 32px;
+    }
+  }
+
+  &--primary {
+    background-color: #e4f7f9;
+  }
+
+  &--secondary {
+    background-color: #67adb9;
+  }
+
+  &--tertiary {
+    background-color: #e4f8dc;
+  }
+}
+
+.icon-color--primary {
+  color: #5f97a0;
+}
+
+.icon-color--green {
+  color: #54d62c;
 }

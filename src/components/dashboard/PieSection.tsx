@@ -1,17 +1,32 @@
 import PieCard from "@/components/dashboard/PieCard";
+import Card from "@/components/common/Card";
 
 const data = [
-  { label: "Pending", percent: 24, color: "#f26522" },
-  { label: "Registered", percent: 56, color: "#66cc66" },
-  { label: "Post Treatment", percent: 20, color: "#3c8dbc" },
+  { percent: 24, statusText: "Pending", color: "#FF966B" },
+  {
+    percent: 56,
+    statusText: "Registered",
+    color: "#54D62C",
+  },
+  {
+    percent: 20,
+    statusText: "Post Treatment",
+    color: "#1890FF",
+  },
 ];
 
 export default function PieSection() {
   return (
     <div className="pie-section">
-      {data.map((p, i) => (
-        <PieCard key={i} {...p} />
-      ))}
+      <Card>
+        <div className="pie-section__content">
+          {data.map((p, i) => (
+            <div key={i} className="pie-section__item">
+              <PieCard {...p} />
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 }

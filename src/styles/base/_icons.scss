@@ -1,0 +1,64 @@
+@font-face {
+  font-family: "icomoon";
+  src: url("/fonts/icomoon.woff2") format("woff2"),
+    url("/fonts/icomoon.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icomoon" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-up-arrow:before {
+  content: "\e904";
+  color: #54d62c;
+}
+.icon-edit:before {
+  content: "\e900";
+}
+.icon-file:before {
+  content: "\e901";
+}
+.icon-home:before {
+  content: "\e902";
+}
+.icon-idea:before {
+  content: "\e903";
+}
+.icon-medical:before {
+  content: "\e906";
+}
+.icon-note:before {
+  content: "\e907";
+}
+.icon-overlay-color:before {
+  content: "\e908";
+}
+.icon-plaster:before {
+  content: "\e909";
+}
+.icon-pram:before {
+  content: "\e90a";
+}
+.icon-stethoscope:before {
+  content: "\e90b";
+}
+.icon-trash:before {
+  content: "\e90c";
+}
+.icon-user:before {
+  content: "\e90d";
+}

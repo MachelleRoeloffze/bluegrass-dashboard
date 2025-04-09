@@ -1,5 +1,6 @@
+"use client";
+import { useState } from "react";
 import Toggle from "@/components/ui/Toggle";
-import Badge from "@/components/ui/Badge";
 
 interface Props {
   name: string;
@@ -16,19 +17,30 @@ export default function PracticeRow({
   date,
   status,
 }: Props) {
+  const [isActive, setIsActive] = useState(status === "Active");
+
   return (
     <div className="practice-row">
       <span>{name}</span>
       <span>{phone}</span>
       <span>{email}</span>
       <span>{date}</span>
+
       <div className="status-cell">
-        <Toggle checked={status === "Active"} />
-        <Badge status={status} />
+        <Toggle
+          checked={isActive}
+          onChange={() => setIsActive((prev) => !prev)}
+        />
+        <span className="status-text">{isActive ? "Active" : "Disabled"}</span>
       </div>
+
       <div className="action-cell">
-        <button className="icon-btn">✏️</button>
-        <button className="icon-btn">🗑️</button>
+        <button type="button" className="icon-btn" aria-label="Edit practice">
+          <i className="icon icon-edit" />
+        </button>
+        <button type="button" className="icon-btn" aria-label="Delete practice">
+          <i className="icon icon-trash" />
+        </button>
       </div>
     </div>
   );

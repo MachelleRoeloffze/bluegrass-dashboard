@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-import jwksClient from "jwks-rsa";
+import jwt, { JwtHeader, SigningKeyCallback } from "jsonwebtoken";
+import jwksClient, { SigningKey } from "jwks-rsa";
 
 export async function GET(req: Request) {
   try {
@@ -32,9 +32,7 @@ export async function GET(req: Request) {
     if (!tokenRes.ok || !tokenData.id_token) {
       console.error("❌ Token exchange failed");
       return new NextResponse(
-        JSON.stringify({
-          message: "Callback complete",
-        }),
+        JSON.stringify({ message: "Callback complete" }),
         {
           status: 200,
           headers: { "Content-Type": "application/json" },
@@ -61,15 +59,26 @@ export async function GET(req: Request) {
   }
 }
 
-
-async function verifyIdToken(token: string): Promise<any | null> {
+async function verifyIdToken(
+  token: string
+): Promise<Record<string, unknown> | null> {
   const client = jwksClient({
     jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
   });
 
-  function getKey(header: any, cb: any) {
-    client.getSigningKey(header.kid, function (err, key) {
-      const signingKey = key?.getPublicKey();
+  function getKey(header: JwtHeader, cb: SigningKeyCallback): void {
+    if (!header.kid) {
+      console.error("Missing 'kid' in JWT header");
+      return cb(new Error("Missing 'kid' in JWT header"), undefined);
+    }
+
+    client.getSigningKey(header.kid, (err, key) => {
+      if (err || !key) {
+        console.error("Error retrieving signing key:", err);
+        return cb(err || new Error("Signing key not found"), undefined);
+      }
+
+      const signingKey = (key as SigningKey).getPublicKey();
       cb(null, signingKey);
     });
   }
@@ -80,7 +89,7 @@ async function verifyIdToken(token: string): Promise<any | null> {
         console.error("JWT verify error:", err);
         return resolve(null);
       }
-      resolve(decoded);
+      resolve(decoded as Record<string, unknown>);
     });
   });
 }

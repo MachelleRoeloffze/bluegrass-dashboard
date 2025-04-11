@@ -1,5 +1,6 @@
 @use "utils/variables" as *;
 @use "utils/mixins" as *;
+@use "utils/breakpoints" as *;
 
 @use "base/typography";
 @use "base/icons";
@@ -16,5 +17,6 @@
 @use "dashboard/pieSection";
 
 @use "ui/card";
+@use "ui/popoverCard";
 @use "ui/icon";
 @use "ui/toggle";

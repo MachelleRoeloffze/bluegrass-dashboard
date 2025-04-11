@@ -58,3 +58,86 @@
     }
   }
 }
+
+.popover-notifications {
+  &__title {
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+  }
+
+  &__subtitle {
+    color: #888;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid #f0f0f0;
+
+    &:first-of-type {
+      border-top: none;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #222;
+      margin-bottom: 0.15rem;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 0.1rem;
+    }
+
+    .date {
+      font-size: 0.85rem;
+      color: #aaa;
+      display: flex;
+      align-items: center;
+
+      &::before {
+        content: "⏱️"; // or use a clock icon
+        font-size: 0.85rem;
+        margin-right: 0.3rem;
+      }
+    }
+
+    .icon-trash {
+      margin-left: auto;
+      font-size: 1.1rem;
+      color: #bbb;
+      cursor: pointer;
+
+      &:hover {
+        color: #e74c3c;
+      }
+    }
+  }
+
+  &__clear {
+    text-align: center;
+    color: #55a3b1;
+    margin-top: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

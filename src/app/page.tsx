@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import StatSection from "@/components/dashboard/StatSection";
 import PieSection from "@/components/dashboard/PieSection";
 import PracticeSection from "@/components/dashboard/PracticeSection";
+import LogoLoader from "@/components/ui/LogoLoader";
 
 export default function DashboardPage() {
   return (

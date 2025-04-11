@@ -5,7 +5,6 @@ export default function Header() {
   return (
     <header className="header">
       <div className="actions">
-
         <PopoverCard
           position="bottom-right"
           variant="notifications"

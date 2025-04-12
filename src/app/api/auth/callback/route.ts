@@ -5,7 +5,6 @@ import jwksClient, { SigningKey } from "jwks-rsa";
 
 export async function GET(req: Request) {
   try {
-    console.log("➡️ Callback hit");
     const url = new URL(req.url);
     const code = url.searchParams.get("code");
 
@@ -30,7 +29,6 @@ export async function GET(req: Request) {
     console.log("🎫 Token response:", tokenData);
 
     if (!tokenRes.ok || !tokenData.id_token) {
-      console.error("❌ Token exchange failed");
       return new NextResponse(
         JSON.stringify({ message: "Callback complete" }),
         {
@@ -41,7 +39,6 @@ export async function GET(req: Request) {
     }
 
     const decoded = await verifyIdToken(tokenData.id_token);
-    console.log("✅ Decoded token:", decoded);
     if (!decoded) throw new Error("Invalid ID token");
 
     (await cookies()).set("user-session", JSON.stringify(decoded), {
@@ -51,7 +48,6 @@ export async function GET(req: Request) {
       maxAge: 60 * 60 * 8,
     });
 
-    console.log("🍪 Cookie set!");
     return NextResponse.redirect(new URL("/", req.url));
   } catch (error) {
     console.error("🔥 CALLBACK ERROR:", error);

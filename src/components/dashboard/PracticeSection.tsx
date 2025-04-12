@@ -1,7 +1,11 @@
-import PracticeRow from "@/components/dashboard/PracticeRow";
-import Card from "@/components/common/Card";
+"use client";
 
-type Practice = {
+import { useEffect, useState } from "react";
+import Card from "@/components/common/Card";
+import PracticeRow from "@/components/dashboard/PracticeRow";
+
+export type Practice = {
+  id: number;
   name: string;
   phone: string;
   email: string;
@@ -9,24 +13,64 @@ type Practice = {
   status: "Active" | "Disabled";
 };
 
-const practices: Practice[] = [
-  {
-    name: "Cape Fertility Clinic",
-    phone: "+27 794 3956",
-    email: "info@capefertility.co.za",
-    date: "04/10/2023",
-    status: "Active",
-  },
-  {
-    name: "Another Practice",
-    phone: "+27 123 4567",
-    email: "hello@example.com",
-    date: "03/22/2023",
-    status: "Disabled",
-  },
-];
-
 export default function PracticeSection() {
+  const [practices, setPractices] = useState<Practice[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/practices")
+      .then((res) => res.json())
+      .then((data) => setPractices(data))
+      .catch((err) => console.error("Failed to load practices", err));
+  }, []);
+
+  const handleDelete = async (id: number) => {
+    await fetch(`http://localhost:3001/practices/${id}`, {
+      method: "DELETE",
+    });
+
+    setPractices((prev) => prev.filter((p) => p.id !== id));
+  };
+
+  const handleStatusToggle = async (
+    id: number,
+    currentStatus: "Active" | "Disabled"
+  ) => {
+    const newStatus = currentStatus === "Active" ? "Disabled" : "Active";
+
+    await fetch(`http://localhost:3001/practices/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+
+    setPractices((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, status: newStatus } : p))
+    );
+  };
+
+  const handleEdit = async (id: number, updated: Partial<Practice>) => {
+    const res = await fetch(`http://localhost:3001/practices/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updated),
+    });
+
+    if (!res.ok) {
+      console.error("Failed to PATCH", res.statusText);
+      return;
+    }
+
+    const updatedItem = await res.json();
+
+    setPractices((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, ...updatedItem } : p))
+    );
+  };
+
   return (
     <Card>
       <div className="practice-section">
@@ -40,8 +84,14 @@ export default function PracticeSection() {
           <span>Actions</span>
         </div>
 
-        {practices.map((p, i) => (
-          <PracticeRow key={i} {...p} />
+        {practices.map((p) => (
+          <PracticeRow
+            key={p.id}
+            {...p}
+            onDelete={() => handleDelete(p.id)}
+            onToggleStatus={() => handleStatusToggle(p.id, p.status)}
+            onSave={(updated) => handleEdit(p.id, updated)}
+          />
         ))}
       </div>
     </Card>

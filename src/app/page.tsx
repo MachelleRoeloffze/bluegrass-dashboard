@@ -4,7 +4,6 @@ import StatSection from "@/components/dashboard/StatSection";
 import PieSection from "@/components/dashboard/PieSection";
 import PracticeSection from "@/components/dashboard/PracticeSection";
 
-
 export default function DashboardPage() {
   return (
     <div className="dashboard-layout">
@@ -12,6 +11,11 @@ export default function DashboardPage() {
       <div className="main-area">
         <Header />
         <main className="dashboard-content">
+          {/* <p>Welcome Andrew!</p>{" "}
+          <p>
+            Nulla ut aliquam metus. Integer at diam sem. Nunc finibus nibh vel
+            risus eleifend laoreet. Link
+          </p> */}
           <div className="dashboard-page">
             <StatSection />
             <PieSection />

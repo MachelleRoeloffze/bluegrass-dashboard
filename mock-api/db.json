@@ -1,0 +1,84 @@
+{
+  "practices": [
+    {
+      "id": "1",
+      "name": "Cape Fertility Clinicccc",
+      "phone": "+27 794 3956",
+      "email": "info@capefertility.co.za",
+      "date": "2023-04-10",
+      "status": "Active"
+    },
+    {
+      "id": "2",
+      "name": "Durban Women's Health",
+      "phone": "+27 112 4589",
+      "email": "contact@dwh.co.za",
+      "date": "2023-03-12",
+      "status": "Disabled"
+    },
+    {
+      "id": "3",
+      "name": "Joburg Family Practice",
+      "phone": "+27 849 2211",
+      "email": "info@jfp.co.za",
+      "date": "2023-03-20",
+      "status": "Active"
+    },
+    {
+      "id": "4",
+      "name": "Bloem Wellness Centre",
+      "phone": "+27 763 9823",
+      "email": "hello@bwc.co.za",
+      "date": "2023-02-05",
+      "status": "Active"
+    },
+    {
+      "id": "5",
+      "name": "Eastern Cape Medical",
+      "phone": "+27 443 2123",
+      "email": "support@ecm.co.za",
+      "date": "2023-01-22",
+      "status": "Disabled"
+    },
+    {
+      "id": "6",
+      "name": "Stellenbosch Health Hub",
+      "phone": "+27 333 9087",
+      "email": "admin@shh.co.za",
+      "date": "2022-12-18",
+      "status": "Active"
+    },
+    {
+      "id": "7",
+      "name": "George Paediatrics",
+      "phone": "+27 551 8888",
+      "email": "reception@gpeds.co.za",
+      "date": "2023-04-01",
+      "status": "Disabled"
+    },
+    {
+      "id": "8",
+      "name": "Nelspruit Women's Clinic",
+      "phone": "+27 615 4432",
+      "email": "info@nwc.co.za",
+      "date": "2023-03-28",
+      "status": "Active"
+    },
+    {
+      "id": "9",
+      "name": "Limpopo Regional Health",
+      "phone": "+27 891 2220",
+      "email": "help@lrh.co.za",
+      "date": "2023-02-10",
+      "status": "Disabled"
+    },
+    {
+      "id": "10",
+      "name": "Port Elizabeth Day Clinicccc",
+      "phone": "+27 789 1000",
+      "email": "info@pedc.co.za",
+      "date": "2023-03-30",
+      "status": "Active"
+    }
+  ]
+}

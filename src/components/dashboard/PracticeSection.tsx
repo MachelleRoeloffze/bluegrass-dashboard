@@ -13,13 +13,18 @@ export type Practice = {
   status: "Active" | "Disabled";
 };
 
-export default function PracticeSection() {
+export default function PracticeSection({ limit }: { limit?: number }) {
   const [practices, setPractices] = useState<Practice[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:3001/practices")
       .then((res) => res.json())
-      .then((data) => setPractices(data))
+      .then((data) => {
+        const sorted = [...data].sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setPractices(sorted);
+      })
       .catch((err) => console.error("Failed to load practices", err));
   }, []);
 
@@ -27,7 +32,6 @@ export default function PracticeSection() {
     await fetch(`http://localhost:3001/practices/${id}`, {
       method: "DELETE",
     });
-
     setPractices((prev) => prev.filter((p) => p.id !== id));
   };
 
@@ -36,12 +40,9 @@ export default function PracticeSection() {
     currentStatus: "Active" | "Disabled"
   ) => {
     const newStatus = currentStatus === "Active" ? "Disabled" : "Active";
-
     await fetch(`http://localhost:3001/practices/${id}`, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: newStatus }),
     });
 
@@ -53,9 +54,7 @@ export default function PracticeSection() {
   const handleEdit = async (id: number, updated: Partial<Practice>) => {
     const res = await fetch(`http://localhost:3001/practices/${id}`, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),
     });
 
@@ -71,6 +70,8 @@ export default function PracticeSection() {
     );
   };
 
+  const visiblePractices = limit ? practices.slice(0, limit) : practices;
+
   return (
     <Card>
       <div className="practice-section">
@@ -84,7 +85,7 @@ export default function PracticeSection() {
           <span>Actions</span>
         </div>
 
-        {practices.map((p) => (
+        {visiblePractices.map((p) => (
           <PracticeRow
             key={p.id}
             {...p}
@@ -93,6 +94,14 @@ export default function PracticeSection() {
             onSave={(updated) => handleEdit(p.id, updated)}
           />
         ))}
+
+        {limit && (
+          <div className="practice-section__footer">
+            <a href="/practices" className="link">
+              View all practices
+            </a>
+          </div>
+        )}
       </div>
     </Card>
   );

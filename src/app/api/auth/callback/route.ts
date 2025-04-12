@@ -29,51 +29,51 @@ export async function GET(req: Request) {
     console.log("🎫 Token response:", tokenData);
 
     if (!tokenRes.ok || !tokenData.id_token) {
-      return new NextResponse(
-        JSON.stringify({ message: "Callback complete" }),
-        {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        }
+      return NextResponse.json(
+        { message: "Callback complete" },
+        { status: 200 }
       );
     }
 
     const decoded = await verifyIdToken(tokenData.id_token);
     if (!decoded) throw new Error("Invalid ID token");
 
-    (await cookies()).set("user-session", JSON.stringify(decoded), {
+    const res = NextResponse.redirect(new URL("/", req.url));
+    res.cookies.set("user-session", JSON.stringify(decoded), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       path: "/",
       maxAge: 60 * 60 * 8,
     });
 
-    return NextResponse.redirect(new URL("/", req.url));
+    return res;
   } catch (error) {
     console.error("🔥 CALLBACK ERROR:", error);
     return NextResponse.redirect(new URL("/login?error=server_error", req.url));
   }
 }
 
-async function verifyIdToken(
-  token: string
-): Promise<Record<string, unknown> | null> {
+type Auth0IdToken = {
+  name: string;
+  email: string;
+  picture?: string;
+  sub: string;
+  [key: string]: any;
+};
+
+async function verifyIdToken(token: string): Promise<Auth0IdToken | null> {
   const client = jwksClient({
     jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
   });
 
   function getKey(header: JwtHeader, cb: SigningKeyCallback): void {
     if (!header.kid) {
-      console.error("Missing 'kid' in JWT header");
       return cb(new Error("Missing 'kid' in JWT header"), undefined);
     }
 
     client.getSigningKey(header.kid, (err, key) => {
-      if (err || !key) {
-        console.error("Error retrieving signing key:", err);
+      if (err || !key)
         return cb(err || new Error("Signing key not found"), undefined);
-      }
-
       const signingKey = (key as SigningKey).getPublicKey();
       cb(null, signingKey);
     });
@@ -85,7 +85,7 @@ async function verifyIdToken(
         console.error("JWT verify error:", err);
         return resolve(null);
       }
-      resolve(decoded as Record<string, unknown>);
+      resolve(decoded as Auth0IdToken);
     });
   });
 }

@@ -9,6 +9,9 @@
 @use "layout/header";
 @use "layout/sidebar";
 
+@use "page/profile";
+@use "page/logs";
+
 @use "dashboard/statCard";
 @use "dashboard/practiceCard";
 @use "dashboard/practiceRow";
@@ -21,3 +24,4 @@
 @use "ui/icon";
 @use "ui/toggle";
 @use "ui/logoLoader";
+@use "ui/pagination";

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const links = [
   { label: "Dashboard", icon: "icon-home", href: "/" },
@@ -12,6 +13,7 @@ const links = [
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <>
@@ -35,7 +37,9 @@ export default function Sidebar() {
             <Link
               key={index}
               href={link.href}
-              className={`sidebar__link${index === 0 ? " active" : ""}`}
+              className={`sidebar__link${
+                pathname === link.href ? " active" : ""
+              }`}
               onClick={() => setIsOpen(false)}
             >
               <i className={link.icon} />

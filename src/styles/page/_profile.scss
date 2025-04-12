@@ -1,0 +1,66 @@
+.profile {
+  padding: 32px;
+
+  &__heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+
+  &__card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__avatar img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__details {
+    .profile__name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .profile__email {
+      font-size: 14px;
+      color: #777;
+    }
+  }
+
+  &__stats {
+    display: flex;
+    gap: 32px;
+
+    .profile__stat {
+      flex: 1;
+
+      &-label {
+        font-size: 13px;
+        color: #888;
+        margin-bottom: 4px;
+      }
+
+      &-value {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+      }
+    }
+  }
+}

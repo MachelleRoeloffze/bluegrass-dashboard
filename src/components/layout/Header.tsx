@@ -1,27 +1,34 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUser } from "@/context/UserContext";
 import PopoverCard from "@/components/ui/PopoverCard";
 
 export default function Header() {
-  const [notifications, setNotifications] = useState([
+  const user = useUser();
+  const [notifications, setNotifications] = useState<
     {
-      id: 1,
-      title: "New Registration",
-      subtitle: "Alex Fredricks",
-      date: "07 Oct 2022",
-      avatar: "/avatar1.jpg",
-    },
-    {
-      id: 2,
-      title: "New Content Added",
-      subtitle: "Blake Robertson",
-      date: "07 Oct 2022",
-      avatar: "/avatar2.jpg",
-    },
-  ]);
+      id: number;
+      title: string;
+      subtitle: string;
+      date: string;
+      avatar: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    if (user?.email) {
+      fetch(
+        `http://localhost:3001/notifications?email=${encodeURIComponent(
+          user.email
+        )}`
+      )
+        .then((res) => res.json())
+        .then(setNotifications)
+        .catch(() => setNotifications([]));
+    }
+  }, [user]);
 
   const clearAll = () => setNotifications([]);
-
   const deleteNotification = (id: number) =>
     setNotifications((prev) => prev.filter((n) => n.id !== id));
 
@@ -66,8 +73,12 @@ export default function Header() {
           </div>
         </PopoverCard>
 
-        <img className="avatar" src="/avatar.svg" alt="User" />
-        <span className="user">Adrian Stefan</span>
+        <img
+          className="avatar"
+          src={user?.picture || "/avatar.svg"}
+          alt={user?.name}
+        />
+        <span className="user">{user?.name}</span>
 
         <PopoverCard
           position="bottom-left"
@@ -75,14 +86,22 @@ export default function Header() {
           triggerContent={<i className="icon icon-note" />}
         >
           <div className="popover-user">
-            <p className="popover-user__name">Adrian Stefan</p>
-            <p className="popover-user__email">adrian@mrfertility.co.za</p>
-            <button
-              className="popover-user__action"
-              onClick={() => (window.location.href = "/api/auth/logout")}
-            >
-              Logout
-            </button>
+            <div className="popover-user__info">
+              <p className="popover-user__name">{user?.name}</p>
+              <p className="popover-user__email">{user?.email}</p>
+            </div>
+
+            <div className="popover-user__divider" />
+
+            <div className="popover-user__actions">
+              <button className="popover-user__action">Profile</button>
+              <button
+                className="popover-user__action"
+                onClick={() => (window.location.href = "/api/auth/logout")}
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </PopoverCard>
       </div>

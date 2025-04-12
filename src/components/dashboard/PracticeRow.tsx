@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { useUser } from "@/context/UserContext";
+import { logActivity } from "@/lib/log";
 import Toggle from "@/components/ui/Toggle";
 import CheckIcon from "../../../public/images/checkIcon";
 
@@ -24,18 +26,44 @@ export default function PracticeRow({
   onToggleStatus,
   onSave,
 }: Props) {
+  const user = useUser();
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(name);
   const [editPhone, setEditPhone] = useState(phone);
   const [editEmail, setEditEmail] = useState(email);
 
-  const handleSave = () => {
-    onSave({
-      name: editName,
-      phone: editPhone,
-      email: editEmail,
-    });
+  const handleSave = async () => {
+    onSave({ name: editName, phone: editPhone, email: editEmail });
     setIsEditing(false);
+
+    await logActivity({
+      user,
+      action: "Edited Practice",
+      target: name,
+      status: "Success",
+    });
+  };
+
+  const handleToggle = async () => {
+    onToggleStatus();
+
+    await logActivity({
+      user,
+      action: status === "Active" ? "Disabled Practice" : "Enabled Practice",
+      target: name,
+      status: "Success",
+    });
+  };
+
+  const handleDelete = async () => {
+    onDelete();
+
+    await logActivity({
+      user,
+      action: "Deleted Practice",
+      target: name,
+      status: "Warning",
+    });
   };
 
   return (
@@ -54,7 +82,7 @@ export default function PracticeRow({
             value={editEmail}
             onChange={(e) => setEditEmail(e.target.value)}
           />
-          <span>{date}</span> {/* 🔒 Non-editable */}
+          <span>{date}</span>
         </>
       ) : (
         <>
@@ -66,7 +94,7 @@ export default function PracticeRow({
       )}
 
       <div className="status-cell">
-        <Toggle checked={status === "Active"} onChange={onToggleStatus} />
+        <Toggle checked={status === "Active"} onChange={handleToggle} />
         <span className="status-text">{status}</span>
       </div>
 
@@ -80,7 +108,7 @@ export default function PracticeRow({
             <i className="icon icon-edit" />
           </button>
         )}
-        <button className="icon-btn" onClick={onDelete}>
+        <button className="icon-btn" onClick={handleDelete}>
           <i className="icon icon-trash" />
         </button>
       </div>

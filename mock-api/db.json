@@ -38,7 +38,7 @@
       "phone": "+27 443 2123",
       "email": "support@ecm.co.za",
       "date": "2023-01-22",
-      "status": "Disabled"
+      "status": "Active"
     },
     {
       "id": "6",
@@ -55,30 +55,186 @@
       "email": "reception@gpeds.co.za",
       "date": "2023-04-01",
       "status": "Disabled"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "title": "New Registration",
+      "subtitle": "Alex Fredricks",
+      "date": "07 Oct 2022",
+      "avatar": "/avatar1.jpg",
+      "email": "machelleroeloffze@gmail.com"
     },
     {
-      "id": "8",
-      "name": "Nelspruit Women's Clinic",
-      "phone": "+27 615 4432",
-      "email": "info@nwc.co.za",
-      "date": "2023-03-28",
-      "status": "Active"
+      "id": 2,
+      "title": "New Content Added",
+      "subtitle": "Blake Robertson",
+      "date": "07 Oct 2022",
+      "avatar": "/avatar2.jpg",
+      "email": "machelleroeloffze@gmail.com"
+    }
+  ],
+  "logs": [
+    {
+      "id": 1,
+      "timestamp": "2025-04-12T09:15:00",
+      "user": "Machelle Roeloffze",
+      "action": "Edited Practice",
+      "target": "Cape Fertility",
+      "status": "Success"
     },
     {
-      "id": "9",
-      "name": "Limpopo Regional Health",
-      "phone": "+27 891 2220",
-      "email": "help@lrh.co.za",
-      "date": "2023-02-10",
-      "status": "Disabled"
+      "id": "d29a",
+      "timestamp": "2025-04-12T17:15:11.732Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Nelspruit Women's Clinic",
+      "status": "Success"
     },
     {
-      "id": "10",
-      "name": "Port Elizabeth Day Clinicccc",
-      "phone": "+27 789 1000",
-      "email": "info@pedc.co.za",
-      "date": "2023-03-30",
-      "status": "Active"
+      "id": "8639",
+      "timestamp": "2025-04-12T17:15:13.565Z",
+      "user": "Machelle Roeloffze",
+      "action": "Deleted Practice",
+      "target": "Nelspruit Women's Clinic",
+      "status": "Warning"
+    },
+    {
+      "id": "1c04",
+      "timestamp": "2025-04-12T17:15:20.374Z",
+      "user": "Machelle Roeloffze",
+      "action": "Edited Practice",
+      "target": "Cape Fertility Clinicccc",
+      "status": "Success"
+    },
+    {
+      "id": "a27e",
+      "timestamp": "2025-04-12T17:21:44.170Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Durban Women's Health",
+      "status": "Success"
+    },
+    {
+      "id": "dc6d",
+      "timestamp": "2025-04-12T17:21:45.024Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Durban Women's Health",
+      "status": "Success"
+    },
+    {
+      "id": "5980",
+      "timestamp": "2025-04-12T17:26:00.015Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Bloem Wellness Centre",
+      "status": "Success"
+    },
+    {
+      "id": "f992",
+      "timestamp": "2025-04-12T17:26:00.810Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Bloem Wellness Centre",
+      "status": "Success"
+    },
+    {
+      "id": "3100",
+      "timestamp": "2025-04-12T17:26:02.129Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Joburg Family Practice",
+      "status": "Success"
+    },
+    {
+      "id": "45c8",
+      "timestamp": "2025-04-12T17:26:02.813Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Joburg Family Practice",
+      "status": "Success"
+    },
+    {
+      "id": "8965",
+      "timestamp": "2025-04-12T17:26:03.703Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Durban Women's Health",
+      "status": "Success"
+    },
+    {
+      "id": "8f55",
+      "timestamp": "2025-04-12T17:26:04.331Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Durban Women's Health",
+      "status": "Success"
+    },
+    {
+      "id": "bbd2",
+      "timestamp": "2025-04-12T17:26:05.306Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Cape Fertility Clinicccc",
+      "status": "Success"
+    },
+    {
+      "id": "b0ec",
+      "timestamp": "2025-04-12T17:26:06.043Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Cape Fertility Clinicccc",
+      "status": "Success"
+    },
+    {
+      "id": "f5af",
+      "timestamp": "2025-04-12T17:26:21.814Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Joburg Family Practice",
+      "status": "Success"
+    },
+    {
+      "id": "19f8",
+      "timestamp": "2025-04-12T17:26:22.904Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Joburg Family Practice",
+      "status": "Success"
+    },
+    {
+      "id": "c5cc",
+      "timestamp": "2025-04-12T17:26:23.292Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Joburg Family Practice",
+      "status": "Success"
+    },
+    {
+      "id": "02bf",
+      "timestamp": "2025-04-12T17:26:23.595Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Joburg Family Practice",
+      "status": "Success"
+    },
+    {
+      "id": "2893",
+      "timestamp": "2025-04-12T17:26:23.879Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Joburg Family Practice",
+      "status": "Success"
+    },
+    {
+      "id": "efd8",
+      "timestamp": "2025-04-12T17:26:24.479Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Joburg Family Practice",
+      "status": "Success"
     }
   ]
 }

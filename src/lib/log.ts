@@ -1,4 +1,6 @@
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "./supabaseClient";
+
+type StatusType = "Success" | "Warning" | "Error";
 
 export async function logActivity({
   user,
@@ -9,19 +11,16 @@ export async function logActivity({
   user: { name: string; email: string };
   action: string;
   target: string;
-  status?: "Success" | "Warning" | "Error";
+  status?: StatusType;
 }) {
   const payload = {
     timestamp: new Date().toISOString(),
-    user: user.name,
+    user_email: user.email,
     action,
     target,
     status,
   };
 
   const { error } = await supabase.from("logs").insert(payload);
-
-  if (error) {
-    console.error("Failed to log activity:", error.message);
-  }
+  if (error) console.error("Failed to log activity:", error.message);
 }

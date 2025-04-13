@@ -81,25 +81,22 @@ export default function PracticeSection({ limit }: { limit?: number }) {
       .update(updated)
       .eq("id", id)
       .select()
-      .single();
+      .limit(1)
+      .maybeSingle(); // avoids throwing if not exactly 1 row
 
     if (error) {
       console.error("Failed to edit:", error.message);
       return;
     }
 
+    if (!data) {
+      console.warn("No matching row found for edit.");
+      return;
+    }
+
     setPractices((prev) =>
       prev.map((p) => (p.id === id ? { ...p, ...data } : p))
     );
-
-    if (user && data) {
-      await logActivity({
-        user: { name: user.name, email: user.email },
-        action: "Edited Practice",
-        target: data.name,
-        status: "Success",
-      });
-    }
   };
 
   const visiblePractices = limit ? practices.slice(0, limit) : practices;

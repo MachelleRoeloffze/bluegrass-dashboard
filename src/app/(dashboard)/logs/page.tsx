@@ -20,8 +20,7 @@ export default function LogPage() {
 
   useEffect(() => {
     if (!user?.email) return;
-
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/logs`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logs`)
       .then((res) => res.json())
       .then((data: LogEntry[]) => {
         const filtered = data.filter(

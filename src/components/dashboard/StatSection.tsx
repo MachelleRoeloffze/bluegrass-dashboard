@@ -1,15 +1,27 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import StatCard from "@/components/dashboard/StatCard";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function StatSection() {
   const [practiceCount, setPracticeCount] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3001/practices")
-      .then((res) => res.json())
-      .then((data) => setPracticeCount(data.length))
-      .catch(() => setPracticeCount(0));
+    const fetchPracticeCount = async () => {
+      const { count, error } = await supabase
+        .from("practices")
+        .select("*", { count: "exact", head: true });
+
+      if (error) {
+        console.error("Failed to load practices count", error);
+        setPracticeCount(0);
+      } else {
+        setPracticeCount(count);
+      }
+    };
+
+    fetchPracticeCount();
   }, []);
 
   const stats = [

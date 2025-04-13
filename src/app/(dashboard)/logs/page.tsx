@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 import { useUser } from "@/context/UserContext";
 import { usePagination } from "@/hooks/usePagination";
 import Pagination from "@/components/ui/Pagination";
 
 type LogEntry = {
-  id: number;
+  id: string;
   timestamp: string;
-  user: string;
+  user_email: string;
   action: string;
   target: string;
   status: "Success" | "Warning" | "Error";
@@ -20,19 +21,32 @@ export default function LogPage() {
 
   useEffect(() => {
     if (!user?.email) return;
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/logs`)
-      .then((res) => res.json())
-      .then((data: LogEntry[]) => {
-        const filtered = data.filter(
-          (log) =>
-            log.user?.toLowerCase() === user.email.toLowerCase() ||
-            log.user?.toLowerCase() === user.name?.toLowerCase()
-        );
-        setLogs(filtered);
-      })
-      .catch(() => setLogs([]));
+
+    const fetchLogs = async () => {
+      const { data, error } = await supabase
+        .from("logs")
+        .select("*")
+        .order("timestamp", { ascending: false });
+
+      if (error) {
+        console.error("Supabase logs error:", error.message);
+        setLogs([]);
+        return;
+      }
+
+      const filtered = data.filter(
+        (log) => log.user_email?.toLowerCase() === user.email.toLowerCase()
+      );
+
+      console.log("Fetched logs →", data);
+      console.log("User email:", user.email);
+      console.log("Filtered logs:", filtered);
+
+      setLogs(filtered);
+    };
+
+    fetchLogs();
   }, [user]);
-  console.log("API URL →", process.env.NEXT_PUBLIC_API_URL);
 
   const { totalPages, getPage } = usePagination(logs, 10);
   const paginatedLogs = getPage(currentPage);
@@ -63,11 +77,13 @@ export default function LogPage() {
         ))}
       </div>
 
-      <Pagination
-        current={currentPage}
-        total={totalPages}
-        onPageChange={(p) => setCurrentPage(p)}
-      />
+      {logs.length > 0 && (
+        <Pagination
+          current={currentPage}
+          total={totalPages}
+          onPageChange={(p) => setCurrentPage(p)}
+        />
+      )}
     </div>
   );
 }

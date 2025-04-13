@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const { data, error } = await supabase.from("logs").select("*");
+  const { data, error } = await supabase.from("practices").select("*");
   if (error)
     return NextResponse.json({ error: error.message }, { status: 500 });
 

@@ -1,5 +1,7 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import { supabase } from "@/utils/supabaseClient";
 import { useUser } from "@/context/UserContext";
 import PopoverCard from "@/components/ui/PopoverCard";
 import Link from "next/link";
@@ -18,20 +20,35 @@ export default function Header() {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(
-        `${
-          process.env.NEXT_PUBLIC_API_URL
-        }/api/notifications?email=${encodeURIComponent(user.email)}`
-      )
-        .then((res) => res.json())
-        .then(setNotifications)
-        .catch(() => setNotifications([]));
+      const fetchNotifications = async () => {
+        const { data, error } = await supabase
+          .from("notifications")
+          .select("*")
+          .eq("email", user.email);
+
+        if (error) {
+          console.error("Error fetching notifications:", error.message);
+          setNotifications([]);
+          return;
+        }
+
+        setNotifications(data);
+      };
+
+      fetchNotifications();
     }
   }, [user]);
 
   const clearAll = () => setNotifications([]);
   const deleteNotification = (id: number) =>
     setNotifications((prev) => prev.filter((n) => n.id !== id));
+
+  const fullName =
+    user?.user_metadata?.name ||
+    user?.user_metadata?.full_name ||
+    user?.email ||
+    "User";
+  const profilePic = user?.user_metadata?.picture || "/avatar.svg";
 
   return (
     <header className="header">
@@ -86,12 +103,8 @@ export default function Header() {
           </div>
         </PopoverCard>
 
-        <img
-          className="avatar"
-          src={user?.picture || "/avatar.svg"}
-          alt={user?.name}
-        />
-        <span className="user">{user?.name}</span>
+        <img className="avatar" src={profilePic} alt={fullName} />
+        <span className="user">{fullName}</span>
 
         <PopoverCard
           position="bottom-left"
@@ -100,7 +113,7 @@ export default function Header() {
         >
           <div className="popover-user">
             <div className="popover-user__info">
-              <p className="popover-user__name">{user?.name}</p>
+              <p className="popover-user__name">{fullName}</p>
               <p className="popover-user__email">{user?.email}</p>
             </div>
 
@@ -111,7 +124,7 @@ export default function Header() {
                 Profile
               </Link>
 
-              <a href="/api/auth/logout" className="popover-user__action">
+              <a href="/logout" className="popover-user__action">
                 Logout
               </a>
             </div>

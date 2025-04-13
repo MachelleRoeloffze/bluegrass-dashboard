@@ -30,7 +30,7 @@
 
   &__logo {
     @include respond-to(desktop, max) {
-      margin-top: 40px;
+      margin-top: 70px;
     }
 
     img {

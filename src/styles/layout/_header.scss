@@ -1,15 +1,28 @@
 @use "../utils/mixins" as *;
+@use "../utils/breakpoints" as *;
 
 .header {
   position: sticky;
   top: 0;
-  z-index: 100; 
+  z-index: 100;
   background: white;
   padding: 16px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #e5e7eb;
+
+  @include respond-to(xs) {
+    padding: 16px 10px;
+  }
+
+  @include respond-to(sm) {
+    padding: 16px 10px;
+  }
+
+  @include respond-to(md, max) {
+    padding: 16px 10px;
+  }
 
   .title {
     @include font-body-small;

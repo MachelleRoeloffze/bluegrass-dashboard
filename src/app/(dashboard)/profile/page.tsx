@@ -10,10 +10,15 @@ export default async function ProfilePage() {
       <div className="profile__card">
         <div className="profile__info">
           <div className="profile__avatar">
-            <img src={user?.picture || "/avatar.svg"} alt="Avatar" />
+            <img
+              src={user?.user_metadata?.picture || "/avatar.svg"}
+              alt="Avatar"
+            />
           </div>
           <div className="profile__details">
-            <p className="profile__name">{user?.name || user?.email}</p>
+            <p className="profile__name">
+              {user?.user_metadata?.name || user?.email}
+            </p>
             <p className="profile__email">{user?.email}</p>
           </div>
         </div>

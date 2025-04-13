@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import StatCard from "@/components/dashboard/StatCard";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "../../utils/supabaseClient";
 
 export default function StatSection() {
   const [practiceCount, setPracticeCount] = useState<number | null>(null);

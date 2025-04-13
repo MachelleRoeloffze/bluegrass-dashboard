@@ -1,10 +1,7 @@
+"use client";
 import { createContext, useContext } from "react";
+import { User } from "@supabase/supabase-js";
 
-type User = {
-  name: string;
-  email: string;
-  picture?: string;
-};
 
 export const UserContext = createContext<User | null>(null);
 

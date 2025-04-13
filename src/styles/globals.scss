@@ -12,6 +12,7 @@
 @use "page/profile";
 @use "page/logs";
 @use "page/error";
+@use "page/login";
 
 @use "dashboard/statCard";
 @use "dashboard/practiceCard";
@@ -19,6 +20,8 @@
 @use "dashboard/practiceSection";
 @use "dashboard/pieCard";
 @use "dashboard/pieSection";
+@use "dashboard/table";
+@use "dashboard/tableRow";
 
 @use "dashboard/dashboardSkeletons/dashboardSkeleton";
 

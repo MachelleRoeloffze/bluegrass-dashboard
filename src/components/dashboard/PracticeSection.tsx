@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Card from "@/components/common/Card";
-import PracticeRow from "@/components/dashboard/PracticeRow";
+import Table from "@/components/dashboard/Table";
 import { Practice } from "@/types/practice";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/utils/supabaseClient";
 import { useUser } from "@/context/UserContext";
 import { logActivity } from "@/lib/logActivity";
 
@@ -24,25 +24,37 @@ export default function PracticeSection({ limit }: { limit?: number }) {
         return;
       }
 
-      setPractices(data);
+      setPractices(data || []);
     };
 
     loadPractices();
   }, []);
 
+  const getUserInfo = () => {
+    return {
+      name: user?.user_metadata?.name || user?.email || "Unknown",
+      email: user?.email || "no-email",
+    };
+  };
+
   const handleDelete = async (id: number) => {
     const practice = practices.find((p) => p.id === id);
-    await supabase.from("practices").delete().eq("id", id);
-    setPractices((prev) => prev.filter((p) => p.id !== id));
+    if (!practice || !user) return;
 
-    if (user && practice) {
-      await logActivity({
-        user: { name: user.name, email: user.email },
-        action: "Deleted Practice",
-        target: practice.name,
-        status: "Warning",
-      });
+    await logActivity({
+      user: getUserInfo(),
+      action: "Deleted Practice",
+      target: practice.name,
+      status: "Warning",
+    });
+
+    const { error } = await supabase.from("practices").delete().eq("id", id);
+    if (error) {
+      console.error("Delete failed:", error.message);
+      return;
     }
+
+    setPractices((prev) => prev.filter((p) => p.id !== id));
   };
 
   const handleStatusToggle = async (
@@ -65,9 +77,9 @@ export default function PracticeSection({ limit }: { limit?: number }) {
     );
 
     const practice = practices.find((p) => p.id === id);
-    if (user && practice) {
+    if (practice) {
       await logActivity({
-        user: { name: user.name, email: user.email },
+        user: getUserInfo(),
         action: `${newStatus === "Active" ? "Enabled" : "Disabled"} Practice`,
         target: practice.name,
         status: "Success",
@@ -76,13 +88,24 @@ export default function PracticeSection({ limit }: { limit?: number }) {
   };
 
   const handleEdit = async (id: number, updated: Partial<Practice>) => {
+    const practice = practices.find((p) => p.id === id);
+    if (!practice || !user) return;
+
+    const updatedFields: Partial<Practice> = {
+      ...updated,
+      actions: {
+        ...(practice.actions || {}),
+        lastEditedBy: user.email,
+        lastEditedAt: new Date().toISOString(),
+      },
+    };
+
     const { data, error } = await supabase
       .from("practices")
-      .update(updated)
+      .update(updatedFields)
       .eq("id", id)
       .select()
-      .limit(1)
-      .maybeSingle(); // avoids throwing if not exactly 1 row
+      .maybeSingle();
 
     if (error) {
       console.error("Failed to edit:", error.message);
@@ -90,46 +113,51 @@ export default function PracticeSection({ limit }: { limit?: number }) {
     }
 
     if (!data) {
-      console.warn("No matching row found for edit.");
+      console.warn("No row returned from edit.");
       return;
     }
 
     setPractices((prev) =>
       prev.map((p) => (p.id === id ? { ...p, ...data } : p))
     );
+
+    await logActivity({
+      user: getUserInfo(),
+      action: "Edited Practice",
+      target: data.name || "Unknown",
+      status: "Success",
+    });
   };
 
   const visiblePractices = limit ? practices.slice(0, limit) : practices;
+
+  const columns = [
+    { label: "Practise Name", key: "name" },
+    { label: "Tel No", key: "phone" },
+    { label: "Email", key: "email" },
+    { label: "Date Created", key: "date" },
+  ];
 
   return (
     <Card>
       <div className="practice-section">
         <h3 className="practice-section__title">Newest Practices</h3>
-        <div className="practice-section__header">
-          <span>Practice Name</span>
-          <span>Tel No</span>
-          <span>Email</span>
-          <span>Date Created</span>
-          <span>Status</span>
-          <span>Actions</span>
-        </div>
 
-        {visiblePractices.map((p) => (
-          <PracticeRow
-            key={p.id}
-            {...p}
-            onDelete={() => handleDelete(p.id)}
-            onToggleStatus={() => handleStatusToggle(p.id, p.status)}
-            onSave={(updated) => handleEdit(p.id, updated)}
-          />
-        ))}
+        <Table
+          columns={columns}
+          data={visiblePractices}
+          statusField="status"
+          onDelete={handleDelete}
+          onToggleStatus={handleStatusToggle}
+          onSave={handleEdit}
+        />
 
         {limit && (
           <div className="practice-section__footer">
             <a href="/practices" className="practice-section__link">
               See All
             </a>
-            <i className="icon icon-right"></i>
+            <i className="icon icon-right" />
           </div>
         )}
       </div>

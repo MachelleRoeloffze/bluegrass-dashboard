@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { logActivity } from "@/lib/log";
@@ -9,6 +10,11 @@ interface Props {
   phone: string;
   email: string;
   date: string;
+  actions: {
+    lastEditedBy?: string;
+    lastEditedAt?: string;
+    [key: string]: any;
+  };
   status: "Active" | "Disabled";
   onDelete: () => void;
   onToggleStatus: () => void;
@@ -20,6 +26,7 @@ export default function PracticeRow({
   phone,
   email,
   date,
+  actions,
   status,
   onDelete,
   onToggleStatus,
@@ -69,51 +76,88 @@ export default function PracticeRow({
   };
 
   return (
-    <div className={`practice-row${isEditing ? " practice-row--editing" : ""}`}>
-      {isEditing ? (
-        <>
+    <div className={`table__row${isEditing ? " table__row--editing" : ""}`}>
+      <div className="table__cell">
+        {isEditing ? (
           <input
-            className="input"
+            className="table__input"
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
           />
+        ) : (
+          <span>{name}</span>
+        )}
+      </div>
+
+      <div className="table__cell">
+        {isEditing ? (
           <input
-            className="input"
+            className="table__input"
             value={editPhone}
             onChange={(e) => setEditPhone(e.target.value)}
           />
+        ) : (
+          <span>{phone}</span>
+        )}
+      </div>
+
+      <div className="table__cell">
+        {isEditing ? (
           <input
-            className="input"
+            className="table__input"
             value={editEmail}
             onChange={(e) => setEditEmail(e.target.value)}
           />
-          <span>{date}</span>
-        </>
-      ) : (
-        <>
-          <span>{name}</span>
-          <span>{phone}</span>
+        ) : (
           <span>{email}</span>
-          <span>{date}</span>
-        </>
-      )}
-
-      <div className="status-cell">
-        <Toggle checked={status === "Active"} onChange={handleToggle} />
-        <span className="status-text">{status}</span>
+        )}
       </div>
 
-      <div className="action-cell">
+      <div className="table__cell">
+        <span>{date}</span>
+      </div>
+
+      <div className="table__cell">
         {isEditing ? (
-          <button className="icon-btn" onClick={handleSave}>
-            <i className="icon icon-tick" />
+          <em className="table__muted">Editing...</em>
+        ) : actions?.lastEditedBy ? (
+          <span>
+            <strong>{actions.lastEditedBy}</strong>
+            {actions.lastEditedAt && (
+              <span className="table__muted">
+                {" "}
+                • {new Date(actions.lastEditedAt).toLocaleDateString()}
+              </span>
+            )}
+          </span>
+        ) : (
+          <em className="table__muted">–</em>
+        )}
+      </div>
+
+      <div className="table__cell table__cell--status">
+        <Toggle checked={status === "Active"} onChange={handleToggle} />
+        <span
+          className={`table__status table__status--${status.toLowerCase()}`}
+        >
+          {status}
+        </span>
+      </div>
+
+      <div className="table__cell table__cell--actions">
+        {isEditing ? (
+          <button className="table__icon-btn" onClick={handleSave}>
+            <i className="icon icon-checkmark" />
           </button>
         ) : (
-          <button className="icon-btn" onClick={() => setIsEditing(true)}>
+          <button
+            className="table__icon-btn"
+            onClick={() => setIsEditing(true)}
+          >
             <i className="icon icon-edit" />
           </button>
         )}
-        <button className="icon-btn" onClick={handleDelete}>
+        <button className="table__icon-btn" onClick={handleDelete}>
           <i className="icon icon-trash" />
         </button>
       </div>

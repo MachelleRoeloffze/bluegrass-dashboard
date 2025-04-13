@@ -1,24 +1,18 @@
+// components/layout/MainLayout.tsx
 "use client";
 
-import { UserContext } from "@/context/UserContext";
+import { ReactNode } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import DashboardSkeleton from "@/components/dashboard/skeletonLoaders/DashboardSkeleton";
+import { User } from "@supabase/supabase-js";
+import { UserContext } from "@/context/UserContext";
 
-type User = {
-  name: string;
-  email: string;
-  picture?: string;
+type Props = {
+  children: ReactNode;
+  user: User;
 };
 
-interface MainLayoutProps {
-  user: User | null;
-  children: React.ReactNode;
-}
-
-export default function MainLayout({ user, children }: MainLayoutProps) {
-  if (!user) return <DashboardSkeleton />;
-
+export default function MainLayout({ children, user }: Props) {
   return (
     <UserContext.Provider value={user}>
       <div className="dashboard-layout">

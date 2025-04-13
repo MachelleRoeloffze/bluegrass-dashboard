@@ -1,6 +1,7 @@
 
 
 export type Practice = {
+  actions: {};
   id: number;
   name: string;
   phone: string;

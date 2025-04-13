@@ -10,7 +10,7 @@ $breakpoints: (
 @use "sass:map";
 
 @mixin respond-to($breakpoint, $type: min) {
-  $value: map.get($breakpoints, $breakpoint);
+  $value: map-get($breakpoints, $breakpoint);
 
   @if $value {
     @if $type == min {
@@ -23,6 +23,6 @@ $breakpoints: (
       }
     }
   } @else {
-    @warn " No value found for breakpoint `#{$breakpoint}`.";
+    @warn "No value found for breakpoint `#{$breakpoint}`.";
   }
 }

@@ -1,80 +1,91 @@
-// import { supabase } from "@/lib/supabaseClient";
-// import { NextRequest, NextResponse } from "next/server";
+import { supabase } from "@/utils/supabaseClient";
+import { NextRequest, NextResponse } from "next/server";
 
-// // PATCH request
-// export async function PATCH(
-//   req: NextRequest,
-//   { params }: { params: { id: string } }
-// ) {
-//   const id = params.id;
-//   const body = await req.json();
-//   console.log("Received PATCH request for ID:", id);
-//   console.log("Request Body:", body);
+// PATCH request — update practice + actions + log
+export async function PATCH(
+  req: NextRequest,
+  context: { params: { id: string } }
+) {
+  const id = context.params.id;
+  const body = await req.json();
 
-//   const { data, error } = await supabase
-//     .from("practices")
-//     .update(body)
-//     .eq("id", id)
-//     .select()
-//     .maybeSingle();
+  const userEmail = "machelleroeloffze@gmail.com";
 
-//   if (error) {
-//     console.error("Error in PATCH:", error.message);
-//     return NextResponse.json({ error: error.message }, { status: 500 });
-//   }
+  const updateWithActions = {
+    ...body,
+    actions: {
+      ...(body.actions || {}),
+      lastEditedBy: userEmail,
+      lastEditedAt: new Date().toISOString(),
+    },
+  };
 
-//   console.log("Updated data:", data);
+  const { data, error } = await supabase
+    .from("practices")
+    .update(updateWithActions)
+    .eq("id", id)
+    .select()
+    .maybeSingle();
 
-//   // Log activity after successful update
-//   const logInsert = await supabase.from("logs").insert([
-//     {
-//       timestamp: new Date().toISOString(),
-//       user_email: "machelleroeloffze@gmail.com", // Example user email
-//       action: "Edited Practice",
-//       target: data?.name || "Unknown",
-//       status: "Success",
-//     },
-//   ]);
+  if (error) {
+    console.error("Error in PATCH:", error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 
-//   console.log("Log inserted for editing practice:", logInsert);
+  await supabase.from("logs").insert([
+    {
+      timestamp: new Date().toISOString(),
+      user_email: userEmail,
+      action: "Edited Practice",
+      target: data?.name || "Unknown",
+      status: "Success",
+    },
+  ]);
 
-//   return NextResponse.json(data);
-// }
+  return NextResponse.json(data);
+}
 
-// // DELETE request
-// export async function DELETE(
-//   req: NextRequest,
-//   { params }: { params: { id: string } }
-// ) {
-//   const id = params.id;
-//   console.log("Received DELETE request for ID:", id);
+// DELETE request — update actions + log + hard delete
+export async function DELETE(
+  req: NextRequest,
+  context: { params: { id: string } }
+) {
+  const id = context.params.id;
+  const userEmail = "machelleroeloffze@gmail.com";
 
-//   const { data, error } = await supabase
-//     .from("practices")
-//     .delete()
-//     .eq("id", id)
-//     .select()
-//     .maybeSingle();
+  console.log("🗑️ Deleting practice with ID:", id);
 
-//   if (error) {
-//     console.error("Error in DELETE:", error.message);
-//     return NextResponse.json({ error: error.message }, { status: 500 });
-//   }
+  await supabase
+    .from("practices")
+    .update({
+      actions: {
+        lastDeletedBy: userEmail,
+        lastDeletedAt: new Date().toISOString(),
+      },
+    })
+    .eq("id", id);
 
-//   console.log("Deleted data:", data);
+  const { data, error } = await supabase
+    .from("practices")
+    .delete()
+    .eq("id", id)
+    .select()
+    .maybeSingle();
 
-//   // Log activity after successful delete
-//   const logInsert = await supabase.from("logs").insert([
-//     {
-//       timestamp: new Date().toISOString(),
-//       user_email: "machelleroeloffze@gmail.com", // Example user email
-//       action: "Deleted Practice",
-//       target: data?.name || "Unknown",
-//       status: "Warning",
-//     },
-//   ]);
+  if (error) {
+    console.error("Error in DELETE:", error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 
-//   console.log("Log inserted for deleting practice:", logInsert);
+  await supabase.from("logs").insert([
+    {
+      timestamp: new Date().toISOString(),
+      user_email: userEmail,
+      action: "Deleted Practice",
+      target: data?.name || "Unknown",
+      status: "Warning",
+    },
+  ]);
 
-//   return NextResponse.json({ success: true });
-// }
+  return NextResponse.json({ success: true });
+}

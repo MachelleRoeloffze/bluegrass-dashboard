@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bluegrass Dashboard
 
-## Getting Started
+A modern full-stack dashboard application built with:
 
-First, run the development server:
+- ✅ Next.js 13 App Router
+- 🔐 Supabase Authentication with Google OAuth
+- 🧠 PostgreSQL via Supabase for persistent storage
+- 🧱 Modular components, clean architecture, and custom SCSS styling
+- 🧪 TypeScript everywhere
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 📁 Folder Structure
+
+```
+bluegrass-dashboard/
+├── .next/                         # Build artifacts (auto-generated)
+├── node_modules/                  # Project dependencies
+├── public/                        # Static assets
+│   ├── fonts/
+│   │   ├── icomoon.eot
+│   │   ├── icomoon.svg
+│   │   ├── icomoon.ttf
+│   │   └── icomoon.woff
+│   └── images/                    # Image assets
+├── src/
+│   ├── app/
+│   │   ├── (dashboard)/           # Authenticated dashboard routes
+│   │   │   ├── logs/
+│   │   │   ├── practices/
+│   │   │   ├── profile/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── api/                   # API route handlers
+│   │   │   ├── auth/
+│   │   │   │   ├── callback/
+│   │   │   │   │   └── page.tsx
+│   │   │   ├── login/
+│   │   │   │   └── page.tsx
+│   │   │   └── logout/
+│   │   │       └── page.tsx
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx             # Root layout
+│   │   ├── logout.tsx
+│   │   └── not-found.tsx
+│   ├── components/                # Reusable UI components
+│   │   └── common/
+│   │       ├── Badge.tsx
+│   │       └── Card.tsx
+│   ├── context/                   # React context (e.g. auth/user)
+│   ├── data/                      # Mock data (optional)
+│   ├── hooks/                     # Custom React hooks
+│   ├── lib/                       # Utility functions (e.g., Supabase client, logging)
+│   ├── store/                     # Global state (if Redux/Zustand used)
+│   ├── styles/                    # SCSS modules
+│   ├── types/                     # TypeScript types (e.g., Practice, Supabase)
+│   └── utils/                     # Global utility helpers
+├── .env.local                     # Environment variables
+├── next.config.ts
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Install dependencies**  
+   `npm install`
 
-## Learn More
+2. **Set environment variables** in `.env.local`:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Run locally**  
+   `npm run dev`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Login via Google** (OAuth must be configured in Supabase & Google Console)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## ✅ Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Google OAuth via Supabase
+- Reusable SCSS-styled components
+- CRUD for "Practices"
+- Logs user actions to Supabase `logs` table
+- Responsive layout and clean dashboard UI
+
+---
+
+## 📦 Deployment
+
+This app is Vercel-ready. Push to GitHub + link to Vercel = 🚀
+
+---
+
+## 📄 License
+
+MIT

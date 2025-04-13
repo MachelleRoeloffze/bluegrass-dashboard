@@ -1,6 +1,7 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "../../../utils/supabaseClient";
 import { useUser } from "@/context/UserContext";
 import { usePagination } from "@/hooks/usePagination";
 import Pagination from "@/components/ui/Pagination";
@@ -18,31 +19,36 @@ export default function LogPage() {
   const user = useUser();
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user?.email) return;
-
     const fetchLogs = async () => {
+      if (!user || !user.email) {
+        console.warn("⛔ No user or user.email found:", user);
+        return;
+      }
+
+      console.log("✅ User email:", user.email);
+
       const { data, error } = await supabase
         .from("logs")
         .select("*")
         .order("timestamp", { ascending: false });
 
       if (error) {
-        console.error("Supabase logs error:", error.message);
-        setLogs([]);
+        console.error("❌ Supabase logs error:", error.message);
         return;
       }
 
+      console.log("✅ All logs:", data);
+
       const filtered = data.filter(
-        (log) => log.user_email?.toLowerCase() === user.email.toLowerCase()
+        (log) => log.user_email?.toLowerCase() === user.email!.toLowerCase()
       );
 
-      console.log("Fetched logs →", data);
-      console.log("User email:", user.email);
-      console.log("Filtered logs:", filtered);
-
+      console.log("✅ Filtered logs:", filtered);
       setLogs(filtered);
+      setLoading(false);
     };
 
     fetchLogs();
@@ -50,6 +56,9 @@ export default function LogPage() {
 
   const { totalPages, getPage } = usePagination(logs, 10);
   const paginatedLogs = getPage(currentPage);
+
+  if (!user) return <p className="logs__loading">Loading user...</p>;
+  if (loading) return <p className="logs__loading">Loading logs...</p>;
 
   return (
     <div className="logs">

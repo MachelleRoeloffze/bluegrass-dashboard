@@ -1,64 +1,152 @@
 .logs {
-    padding: 32px;
-  
-    &__heading {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 24px;
-      color: #1f2937;
+  padding: 32px;
+
+  &__heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #1f2937;
+  }
+
+  &__table {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+
+    &-header,
+    &-row {
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr; // match with practice row
+      padding: 16px 24px;
+      font-size: 14px;
+      align-items: center;
     }
-  
-    &__table {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-      overflow: hidden;
-  
-      &-header, &-row {
-        display: grid;
-        grid-template-columns: 2fr 1.5fr 2fr 2fr 1fr;
-        padding: 16px 24px;
-        font-size: 14px;
+
+    &-header {
+      background: #f3f4f6;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    &-row {
+      border-top: 1px solid #e5e7eb;
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr; // ensure the row also follows this layout
+
+      &:hover {
+        background-color: #f9fafb;
+      }
+
+      .status-cell {
+        display: flex;
         align-items: center;
+        gap: 0.5rem;
+
+        .status-text {
+          font-weight: 500;
+          color: #666;
+        }
       }
-  
-      &-header {
-        background: #f3f4f6;
-        font-weight: 600;
-        color: #374151;
-      }
-  
-      &-row {
-        border-top: 1px solid #e5e7eb;
-  
-        &:hover {
-          background-color: #f9fafb;
+
+      .action-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        .icon-btn {
+          background: none;
+          border: none;
+          padding: 6px;
+          cursor: pointer;
+          color: #4b9aad;
+          transition: opacity 0.2s;
+
+          &:hover {
+            opacity: 0.7;
+          }
+
+          i {
+            font-size: 1rem;
+          }
         }
       }
     }
-  
-    &__status {
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
+  }
+
+  &__status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    width: fit-content;
+
+    &--success {
+      background-color: #e6f6ec;
+      color: #15803d;
+    }
+
+    &--warning {
+      background-color: #fff4e5;
+      color: #b45309;
+    }
+
+    &--error {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+  }
+}
+
+.practice-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr;
+  align-items: center;
+  padding: 25px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.875rem;
+
+  span {
+    white-space: nowrap;
+  }
+
+  .status-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .status-text {
       font-weight: 500;
-      text-align: center;
-      width: fit-content;
-  
-      &--success {
-        background-color: #e6f6ec;
-        color: #15803d;
+      color: #666;
+    }
+  }
+
+  .action-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .icon-btn {
+      background: none;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+      color: #4b9aad;
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.7;
       }
-  
-      &--warning {
-        background-color: #fff4e5;
-        color: #b45309;
-      }
-  
-      &--error {
-        background-color: #fee2e2;
-        color: #b91c1c;
+
+      i {
+        font-size: 1rem;
       }
     }
   }
-  
+
+  &--editing {
+    background-color: #f9fafa;
+    border-left: 4px solid #4b9aad;
+  }
+}

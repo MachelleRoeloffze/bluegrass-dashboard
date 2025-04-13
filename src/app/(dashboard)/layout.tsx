@@ -1,5 +1,4 @@
 import { getUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import MainLayout from "@/components/layout/MainLayout";
 
 export default async function DashboardLayout({
@@ -8,7 +7,11 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const user = await getUser();
-  if (!user) redirect("/login");
+
+  if (!user) {
+ 
+    return <p>Not logged in</p>;
+  }
 
   return <MainLayout user={user}>{children}</MainLayout>;
 }

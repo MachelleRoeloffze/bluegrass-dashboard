@@ -1,14 +1,16 @@
 import { cookies } from "next/headers";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/types/supabase";
 
 export async function getUser() {
-  const cookie = (await cookies()).get("user-session");
-  if (!cookie) return null;
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient<Database>({
+    cookies: () => cookieStore,
+  });
 
-  try {
-    const parsed = JSON.parse(cookie.value);
-    console.log("👤 Parsed user-session cookie:", parsed);
-    return parsed;
-  } catch {
-    return null;
-  }
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return user;
 }

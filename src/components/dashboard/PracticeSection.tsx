@@ -74,10 +74,9 @@ export default function PracticeSection({ limit }: { limit?: number }) {
 
   return (
     <Card>
-      <div className="practice-section__scroll">
-        <div className="practice-section">
-          <h3 className="practice-section__title">Newest Practices</h3>
-
+      <div className="practice-section">
+        <h3 className="practice-section__title">Newest Practices</h3>
+        <div className="practice-section__scroll">
           <div className="practice-section__header">
             <span>Practice Name</span>
             <span>Tel No</span>

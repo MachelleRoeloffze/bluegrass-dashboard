@@ -21,7 +21,7 @@ export default function LogPage() {
   useEffect(() => {
     if (!user?.email) return;
 
-    fetch("http://localhost:3001/logs")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/logs`)
       .then((res) => res.json())
       .then((data: LogEntry[]) => {
         const filtered = data.filter(

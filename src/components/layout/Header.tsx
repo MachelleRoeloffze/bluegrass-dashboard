@@ -19,9 +19,9 @@ export default function Header() {
   useEffect(() => {
     if (user?.email) {
       fetch(
-        `http://localhost:3001/notifications?email=${encodeURIComponent(
-          user.email
-        )}`
+        `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/api/notifications?email=${encodeURIComponent(user.email)}`
       )
         .then((res) => res.json())
         .then(setNotifications)

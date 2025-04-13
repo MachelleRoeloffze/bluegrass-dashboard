@@ -1,66 +1,80 @@
-import { supabase } from "@/lib/supabaseClient";
-import { NextRequest, NextResponse } from "next/server";
+// import { supabase } from "@/lib/supabaseClient";
+// import { NextRequest, NextResponse } from "next/server";
 
-// Define the type for the context parameter
-interface Context {
-  params: {
-    id: string; // Define the `id` parameter as a string type
-  };
-}
+// // PATCH request
+// export async function PATCH(
+//   req: NextRequest,
+//   { params }: { params: { id: string } }
+// ) {
+//   const id = params.id;
+//   const body = await req.json();
+//   console.log("Received PATCH request for ID:", id);
+//   console.log("Request Body:", body);
 
-// PATCH request
-export async function PATCH(req: NextRequest, context: Context) {
-  const id = context.params.id; // Now, `id` is explicitly typed as a string
-  const body = await req.json();
+//   const { data, error } = await supabase
+//     .from("practices")
+//     .update(body)
+//     .eq("id", id)
+//     .select()
+//     .maybeSingle();
 
-  const { data, error } = await supabase
-    .from("practices")
-    .update(body)
-    .eq("id", id)
-    .select()
-    .maybeSingle();
+//   if (error) {
+//     console.error("Error in PATCH:", error.message);
+//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   }
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+//   console.log("Updated data:", data);
 
-  await supabase.from("logs").insert([
-    {
-      timestamp: new Date().toISOString(),
-      user_email: "machelleroeloffze@gmail.com", // Replace with actual user email
-      action: "Edited Practice",
-      target: data?.name || "Unknown",
-      status: "Success",
-    },
-  ]);
+//   // Log activity after successful update
+//   const logInsert = await supabase.from("logs").insert([
+//     {
+//       timestamp: new Date().toISOString(),
+//       user_email: "machelleroeloffze@gmail.com", // Example user email
+//       action: "Edited Practice",
+//       target: data?.name || "Unknown",
+//       status: "Success",
+//     },
+//   ]);
 
-  return NextResponse.json(data);
-}
+//   console.log("Log inserted for editing practice:", logInsert);
 
-// DELETE request
-export async function DELETE(req: NextRequest, context: Context) {
-  const id = context.params.id; // Now, `id` is explicitly typed as a string
+//   return NextResponse.json(data);
+// }
 
-  const { data, error } = await supabase
-    .from("practices")
-    .delete()
-    .eq("id", id)
-    .select()
-    .maybeSingle();
+// // DELETE request
+// export async function DELETE(
+//   req: NextRequest,
+//   { params }: { params: { id: string } }
+// ) {
+//   const id = params.id;
+//   console.log("Received DELETE request for ID:", id);
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+//   const { data, error } = await supabase
+//     .from("practices")
+//     .delete()
+//     .eq("id", id)
+//     .select()
+//     .maybeSingle();
 
-  await supabase.from("logs").insert([
-    {
-      timestamp: new Date().toISOString(),
-      user_email: "machelleroeloffze@gmail.com", // Replace with actual user email
-      action: "Deleted Practice",
-      target: data?.name || "Unknown",
-      status: "Warning",
-    },
-  ]);
+//   if (error) {
+//     console.error("Error in DELETE:", error.message);
+//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   }
 
-  return NextResponse.json({ success: true });
-}
+//   console.log("Deleted data:", data);
+
+//   // Log activity after successful delete
+//   const logInsert = await supabase.from("logs").insert([
+//     {
+//       timestamp: new Date().toISOString(),
+//       user_email: "machelleroeloffze@gmail.com", // Example user email
+//       action: "Deleted Practice",
+//       target: data?.name || "Unknown",
+//       status: "Warning",
+//     },
+//   ]);
+
+//   console.log("Log inserted for deleting practice:", logInsert);
+
+//   return NextResponse.json({ success: true });
+// }

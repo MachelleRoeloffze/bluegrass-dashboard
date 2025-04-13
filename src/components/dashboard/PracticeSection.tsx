@@ -74,36 +74,38 @@ export default function PracticeSection({ limit }: { limit?: number }) {
 
   return (
     <Card>
-      <div className="practice-section">
-        <h3 className="practice-section__title">Newest Practices</h3>
+      <div className="practice-section__scroll">
+        <div className="practice-section">
+          <h3 className="practice-section__title">Newest Practices</h3>
 
-        <div className="practice-section__header">
-          <span>Practice Name</span>
-          <span>Tel No</span>
-          <span>Email</span>
-          <span>Date Created</span>
-          <span>Status</span>
-          <span>Actions</span>
-        </div>
-
-        {visiblePractices.map((p) => (
-          <PracticeRow
-            key={p.id}
-            {...p}
-            onDelete={() => handleDelete(p.id)}
-            onToggleStatus={() => handleStatusToggle(p.id, p.status)}
-            onSave={(updated) => handleEdit(p.id, updated)}
-          />
-        ))}
-
-        {limit && (
-          <div className="practice-section__footer">
-            <a href="/practices" className="practice-section__link">
-              See All
-            </a>
-            <i className="icon icon-right"></i>
+          <div className="practice-section__header">
+            <span>Practice Name</span>
+            <span>Tel No</span>
+            <span>Email</span>
+            <span>Date Created</span>
+            <span>Status</span>
+            <span>Actions</span>
           </div>
-        )}
+
+          {visiblePractices.map((p) => (
+            <PracticeRow
+              key={p.id}
+              {...p}
+              onDelete={() => handleDelete(p.id)}
+              onToggleStatus={() => handleStatusToggle(p.id, p.status)}
+              onSave={(updated) => handleEdit(p.id, updated)}
+            />
+          ))}
+
+          {limit && (
+            <div className="practice-section__footer">
+              <a href="/practices" className="practice-section__link">
+                See All
+              </a>
+              <i className="icon icon-right"></i>
+            </div>
+          )}
+        </div>
       </div>
     </Card>
   );

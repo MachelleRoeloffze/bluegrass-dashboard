@@ -33,6 +33,7 @@ export default function LogPage() {
       })
       .catch(() => setLogs([]));
   }, [user]);
+  console.log("API URL →", process.env.NEXT_PUBLIC_API_URL);
 
   const { totalPages, getPage } = usePagination(logs, 10);
   const paginatedLogs = getPage(currentPage);

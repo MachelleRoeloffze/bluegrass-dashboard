@@ -1,59 +1,89 @@
 @use "breakpoints" as *;
 
-@mixin largetext {
-  font-size: 24px;
+@mixin font-large {
+  font-size: 32px;
   font-weight: 700;
-  line-height: 30px;
+  line-height: 48px;
 
   @include respond-to(md) {
-    font-size: 32px;
-    line-height: 36px;
+    font-size: 24px;
+    line-height: 30px;
   }
 
-  @include respond-to(xl) {
-    font-size: 40px;
-    line-height: 48px;
+  @include respond-to(sm) {
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 
-@mixin mediumtext {
-  font-size: 20px;
+@mixin font-medium {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+
+  @include respond-to(md) {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  @include respond-to(sm) {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+@mixin font-small {
+  font-size: 18px;
   font-weight: 700;
   line-height: 28px;
 
   @include respond-to(md) {
-    font-size: 24px;
-    line-height: 36px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  @include respond-to(sm) {
+    font-size: 14px;
+    line-height: 22px;
   }
 }
 
-@mixin smallText {
+@mixin font-subheading {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 24px;
 
   @include respond-to(md) {
-    font-size: 18px;
-    line-height: 28px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  @include respond-to(sm) {
+    font-size: 12px;
+    line-height: 20px;
   }
 }
 
-@mixin subheading {
-  font-size: 14px;
-  font-weight: 600;
-
-  @include respond-to(md) {
-    font-size: 16px;
-  }
-}
-
-@mixin bodytext {
-  font-size: 14px;
+@mixin font-body {
+  font-size: 16px;
   font-weight: 400;
-  line-height: 22px;
+  line-height: 24px;
 
-  @include respond-to(md) {
-    font-size: 16px;
-    line-height: 24px;
+  @include respond-to(sm) {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+@mixin font-body-small {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+
+  @include respond-to(sm) {
+    font-size: 13px;
+    line-height: 20px;
   }
 }

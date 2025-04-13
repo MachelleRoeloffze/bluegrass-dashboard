@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@/context/UserContext";
 import PopoverCard from "@/components/ui/PopoverCard";
+import Link from "next/link";
 
 export default function Header() {
   const user = useUser();
@@ -38,7 +39,16 @@ export default function Header() {
         <PopoverCard
           position="bottom-right"
           variant="notifications"
-          triggerContent={<i className="icon icon-user" />}
+          triggerContent={
+            <div className="popover__trigger">
+              <i className="icon icon-bell" />
+              {notifications.length > 0 && (
+                <span className="popover__badge">
+                  {notifications.length > 9 ? "" : notifications.length}
+                </span>
+              )}
+            </div>
+          }
         >
           <div className="popover-notifications">
             <p className="popover-notifications__title">Notifications</p>
@@ -56,7 +66,10 @@ export default function Header() {
                 <div>
                   <p className="title">{notif.title}</p>
                   <p className="subtitle">{notif.subtitle}</p>
-                  <p className="date">{notif.date}</p>
+                  <p className="date">
+                    <i className="icon icon-clock"></i>
+                    {notif.date}
+                  </p>
                 </div>
                 <i
                   className="icon icon-trash"
@@ -83,7 +96,7 @@ export default function Header() {
         <PopoverCard
           position="bottom-left"
           variant="user"
-          triggerContent={<i className="icon icon-note" />}
+          triggerContent={<i className="icon icon-right" />}
         >
           <div className="popover-user">
             <div className="popover-user__info">
@@ -94,13 +107,13 @@ export default function Header() {
             <div className="popover-user__divider" />
 
             <div className="popover-user__actions">
-              <button className="popover-user__action">Profile</button>
-              <button
-                className="popover-user__action"
-                onClick={() => (window.location.href = "/api/auth/logout")}
-              >
+              <Link href="/profile" className="popover-user__action">
+                Profile
+              </Link>
+
+              <a href="/api/auth/logout" className="popover-user__action">
                 Logout
-              </button>
+              </a>
             </div>
           </div>
         </PopoverCard>

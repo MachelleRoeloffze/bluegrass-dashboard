@@ -26,6 +26,21 @@
   content: "\e904";
   color: #54d62c;
 }
+.icon-bell:before {
+  content: "\e905";
+  color: #9d9d9d;
+}
+.icon-clock:before {
+  content: "\e908";
+  color: #bcbcbc;
+}
+.icon-right:before {
+  content: "\e90e";
+  color: #5f97a0;
+}
+.icon-tick:before {
+  content: "\e90f";
+}
 .icon-edit:before {
   content: "\e900";
 }
@@ -43,9 +58,6 @@
 }
 .icon-note:before {
   content: "\e907";
-}
-.icon-overlay-color:before {
-  content: "\e908";
 }
 .icon-plaster:before {
   content: "\e909";

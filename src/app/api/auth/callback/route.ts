@@ -57,7 +57,7 @@ type Auth0IdToken = {
   email: string;
   picture?: string;
   sub: string;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 async function verifyIdToken(token: string): Promise<Auth0IdToken | null> {

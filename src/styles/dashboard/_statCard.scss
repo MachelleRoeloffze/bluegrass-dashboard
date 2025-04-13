@@ -3,16 +3,16 @@
 
 .stat-section {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-bottom: 24px;
 
   @include respond-to(tablet, max) {
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @include respond-to(xs, max) {
-    grid-template-columns: repeat(1, 1fr); 
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
@@ -28,14 +28,14 @@
   }
 
   &__title {
-    @include subheading;
-    color: #414141;
+    @include font-body-small;
+    font-weight: 600;
     margin-bottom: 8px;
   }
 
   &__growth {
-    @include subheading;
-    color: #54d62c;
+    @include font-body-small;
+    font-weight: 600;
     margin-bottom: 4px;
 
     &-text {
@@ -44,9 +44,8 @@
   }
 
   &__value {
-    @include largetext;
+    @include font-medium;
     margin: 0;
     line-height: 48px;
-    color: #000;
   }
 }

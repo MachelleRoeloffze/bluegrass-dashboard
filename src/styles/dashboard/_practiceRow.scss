@@ -1,29 +1,51 @@
-@use "../utils/mixins" as *;
-
 .practice-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr;
+  align-items: center;
+  padding: 25px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.875rem;
+
+  span {
+    white-space: nowrap;
+  }
+
   .status-cell {
     display: flex;
     align-items: center;
-  }
-  .status-text {
-    @include bodytext;
-    margin-left: 8px;
+    gap: 0.5rem;
+
+    .status-text {
+      font-weight: 500;
+      color: #666;
+    }
   }
 
   .action-cell {
     display: flex;
+    align-items: center;
+    gap: 0.75rem;
 
     .icon-btn {
       background: none;
       border: none;
-
+      padding: 6px;
       cursor: pointer;
-      padding: 11px;
+      color: #4b9aad;
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.7;
+      }
 
       i {
-        font-size: 20px;
-        color: #67adb9;
+        font-size: 1rem;
       }
     }
+  }
+
+  &--editing {
+    background-color: #f9fafa;
+    border-left: 4px solid #4b9aad;
   }
 }

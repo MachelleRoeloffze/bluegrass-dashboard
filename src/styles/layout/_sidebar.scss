@@ -3,7 +3,7 @@
 
 .sidebar {
   width: 260px;
-  height: 100%;
+  height: 100vh;
   background: #fff;
   padding: 16px;
   display: flex;
@@ -12,6 +12,8 @@
   border-right: 1px solid #e6e8eb;
   transition: transform 0.3s ease;
   z-index: 100;
+  position: sticky;
+  top: 0;
 
   @include respond-to(tablet, max) {
     position: fixed;
@@ -30,6 +32,7 @@
     @include respond-to(tablet, max) {
       margin-top: 40px;
     }
+
     img {
       height: 40px;
       width: 88px;
@@ -43,11 +46,10 @@
   }
 
   &__link {
+    @include font-body-small;
     display: flex;
     align-items: center;
-    font-weight: 500;
     gap: 16px;
-    font-size: 14px;
     color: #414141;
     text-decoration: none;
     padding: 16px 12px;
@@ -88,7 +90,6 @@
       transition: 0.3s ease;
     }
 
-    // Show toggle on tablet and below
     @include respond-to(tablet, max) {
       display: flex;
     }

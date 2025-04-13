@@ -75,8 +75,9 @@ export default function PracticeSection({ limit }: { limit?: number }) {
   return (
     <Card>
       <div className="practice-section">
-        <h3>Newest Practices</h3>
-        <div className="practice-header">
+        <h3 className="practice-section__title">Newest Practices</h3>
+
+        <div className="practice-section__header">
           <span>Practice Name</span>
           <span>Tel No</span>
           <span>Email</span>
@@ -97,9 +98,10 @@ export default function PracticeSection({ limit }: { limit?: number }) {
 
         {limit && (
           <div className="practice-section__footer">
-            <a href="/practices" className="link">
-              View all practices
+            <a href="/practices" className="practice-section__link">
+              See All
             </a>
+            <i className="icon icon-right"></i>
           </div>
         )}
       </div>

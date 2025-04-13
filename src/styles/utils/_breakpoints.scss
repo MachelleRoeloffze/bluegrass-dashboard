@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $breakpoints: (
   xs: 432px,
   xm: 576px,
@@ -8,19 +10,19 @@ $breakpoints: (
 );
 
 @mixin respond-to($breakpoint, $type: min) {
-  $value: map-get($breakpoints, $breakpoint);
+  $value: map.get($breakpoints, $breakpoint);
 
   @if $value {
     @if $type == min {
-      @media (min-width: $value) {
+      @media (min-width: #{$value}) {
         @content;
       }
     } @else if $type == max {
-      @media (max-width: $value) {
+      @media (max-width: #{$value}) {
         @content;
       }
     }
   } @else {
-    @warn "No value found for breakpoint `#{$breakpoint}`.";
+    @warn " No value found for breakpoint `#{$breakpoint}`.";
   }
 }

@@ -30,7 +30,7 @@
     display: flex;
     align-items: center;
     gap: 24px;
-    flex: 1 1 260px; // fluid width
+    flex: 1 1 260px;
     min-width: 0;
 
     @include respond-to(xs, max) {

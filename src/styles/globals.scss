@@ -11,6 +11,7 @@
 
 @use "page/profile";
 @use "page/logs";
+@use "page/error";
 
 @use "dashboard/statCard";
 @use "dashboard/practiceCard";
@@ -19,9 +20,12 @@
 @use "dashboard/pieCard";
 @use "dashboard/pieSection";
 
+@use "dashboard/dashboardSkeletons/dashboardSkeleton";
+
 @use "ui/card";
 @use "ui/popoverCard";
 @use "ui/icon";
 @use "ui/toggle";
+@use "ui/input";
 @use "ui/logoLoader";
 @use "ui/pagination";

@@ -2,7 +2,7 @@
   "practices": [
     {
       "id": "1",
-      "name": "Cape Fertility Clinicccc",
+      "name": "Cape Fertility Clinicc",
       "phone": "+27 794 3956",
       "email": "info@capefertility.co.za",
       "date": "2023-04-10",
@@ -50,7 +50,7 @@
     },
     {
       "id": "7",
-      "name": "George Paediatrics",
+      "name": "George Paediatricsssss",
       "phone": "+27 551 8888",
       "email": "reception@gpeds.co.za",
       "date": "2023-04-01",
@@ -59,7 +59,7 @@
   ],
   "notifications": [
     {
-      "id": 1,
+      "id": "1",
       "title": "New Registration",
       "subtitle": "Alex Fredricks",
       "date": "07 Oct 2022",
@@ -67,7 +67,7 @@
       "email": "machelleroeloffze@gmail.com"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "New Content Added",
       "subtitle": "Blake Robertson",
       "date": "07 Oct 2022",
@@ -77,7 +77,7 @@
   ],
   "logs": [
     {
-      "id": 1,
+      "id": "1",
       "timestamp": "2025-04-12T09:15:00",
       "user": "Machelle Roeloffze",
       "action": "Edited Practice",
@@ -234,6 +234,78 @@
       "user": "Machelle Roeloffze",
       "action": "Enabled Practice",
       "target": "Joburg Family Practice",
+      "status": "Success"
+    },
+    {
+      "id": "28cc",
+      "timestamp": "2025-04-12T17:52:13.573Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Cape Fertility Clinicccc",
+      "status": "Success"
+    },
+    {
+      "id": "1e1b",
+      "timestamp": "2025-04-12T17:52:14.523Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Cape Fertility Clinicccc",
+      "status": "Success"
+    },
+    {
+      "id": "96f6",
+      "timestamp": "2025-04-12T19:02:51.546Z",
+      "user": "Machelle Roeloffze",
+      "action": "Edited Practice",
+      "target": "George Paediatrics",
+      "status": "Success"
+    },
+    {
+      "id": "8c4a",
+      "timestamp": "2025-04-12T19:03:02.894Z",
+      "user": "Machelle Roeloffze",
+      "action": "Edited Practice",
+      "target": "Durban Women's Health",
+      "status": "Success"
+    },
+    {
+      "id": "330e",
+      "timestamp": "2025-04-12T19:03:52.691Z",
+      "user": "Machelle Roeloffze",
+      "action": "Edited Practice",
+      "target": "Cape Fertility Clinicccc",
+      "status": "Success"
+    },
+    {
+      "id": "526a",
+      "timestamp": "2025-04-12T19:05:05.202Z",
+      "user": "Machelle Roeloffze",
+      "action": "Disabled Practice",
+      "target": "Cape Fertility Clinicccc",
+      "status": "Success"
+    },
+    {
+      "id": "8b57",
+      "timestamp": "2025-04-12T19:05:05.771Z",
+      "user": "Machelle Roeloffze",
+      "action": "Enabled Practice",
+      "target": "Cape Fertility Clinicccc",
+      "status": "Success"
+    },
+    {
+      "id": "f9b7",
+      "timestamp": "2025-04-12T19:35:54.246Z",
+      "user": "Machelle Roeloffze",
+      "action": "Edited Practice",
+      "target": "Cape Fertility Clinicccc",
+      "status": "Success"
+    },
+    {
+      "id": "3cf9",
+      "timestamp": "2025-04-13T07:26:10.329Z",
+      "user": "Machelle Roeloffze",
+      "action": "Edited Practice",
+      "target": "Cape Fertility Clinicccc",
       "status": "Success"
     }
   ]

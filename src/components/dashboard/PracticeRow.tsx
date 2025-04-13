@@ -3,13 +3,12 @@ import { useState } from "react";
 import { useUser } from "@/context/UserContext";
 import { logActivity } from "@/lib/log";
 import Toggle from "@/components/ui/Toggle";
-import CheckIcon from "../../../public/images/checkIcon";
 
 interface Props {
   name: string;
   phone: string;
   email: string;
-  date: string; // non-editable
+  date: string;
   status: "Active" | "Disabled";
   onDelete: () => void;
   onToggleStatus: () => void;
@@ -36,6 +35,7 @@ export default function PracticeRow({
     onSave({ name: editName, phone: editPhone, email: editEmail });
     setIsEditing(false);
 
+    if (!user) return;
     await logActivity({
       user,
       action: "Edited Practice",
@@ -47,6 +47,7 @@ export default function PracticeRow({
   const handleToggle = async () => {
     onToggleStatus();
 
+    if (!user) return;
     await logActivity({
       user,
       action: status === "Active" ? "Disabled Practice" : "Enabled Practice",
@@ -58,6 +59,7 @@ export default function PracticeRow({
   const handleDelete = async () => {
     onDelete();
 
+    if (!user) return;
     await logActivity({
       user,
       action: "Deleted Practice",
@@ -67,18 +69,21 @@ export default function PracticeRow({
   };
 
   return (
-    <div className="practice-row">
+    <div className={`practice-row${isEditing ? " practice-row--editing" : ""}`}>
       {isEditing ? (
         <>
           <input
+            className="input"
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
           />
           <input
+            className="input"
             value={editPhone}
             onChange={(e) => setEditPhone(e.target.value)}
           />
           <input
+            className="input"
             value={editEmail}
             onChange={(e) => setEditEmail(e.target.value)}
           />
@@ -101,7 +106,7 @@ export default function PracticeRow({
       <div className="action-cell">
         {isEditing ? (
           <button className="icon-btn" onClick={handleSave}>
-            <CheckIcon />
+            <i className="icon icon-tick" />
           </button>
         ) : (
           <button className="icon-btn" onClick={() => setIsEditing(true)}>

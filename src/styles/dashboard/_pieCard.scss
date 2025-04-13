@@ -20,7 +20,7 @@
     font-weight: 500;
     position: relative;
     z-index: 1;
-    @include bodytext;
+    @include font-body-small;
 
     &::before {
       content: "";
@@ -69,13 +69,14 @@
   }
 
   &__value {
-    @include mediumtext;
+    @include font-medium;
     white-space: nowrap;
   }
 
   &__status {
-    @include bodytext;
+    @include font-body-small;
     padding-top: 4px;
     white-space: nowrap;
+    color: #747474;
   }
 }

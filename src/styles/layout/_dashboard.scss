@@ -1,4 +1,6 @@
 @use "../utils/breakpoints" as *;
+@use "../utils/mixins" as *;
+
 .dashboard-layout {
   display: flex;
   height: 100vh;
@@ -13,12 +15,19 @@
     overflow: hidden;
   }
 
+  &__heading {
+    margin-bottom: 40px;
+
+    p {
+      @include font-body-small;
+    }
+  }
+
   &__content {
     flex: 1;
     padding: 40px 40px 37px 40px;
     overflow-y: auto;
 
-    // Desktop-first approach (apply styles for smaller devices after)
     @include respond-to(desktop, max) {
       padding: 10px;
     }

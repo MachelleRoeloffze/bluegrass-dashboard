@@ -1,17 +1,14 @@
+@use "../utils/mixins" as *;
+
 .table__row {
+  @include font-body-small;
   display: grid;
   grid-template-columns: 2fr 1.5fr 2fr 2fr 1fr 1fr;
   padding: 16px 24px;
-  font-size: 14px;
   align-items: center;
-  border-top: 1px solid #e5e7eb;
 
   &:hover {
     background-color: #f9fafb;
-  }
-
-  .table__cell {
-    padding: 8px 16px;
   }
 
   .table__cell--status {
@@ -26,7 +23,9 @@
     gap: 0.75rem;
   }
 
-  .table__status {
+  &__status {
+    padding: 4px 10px;
+    border-radius: 12px;
     font-size: 12px;
     font-weight: 500;
     text-align: center;

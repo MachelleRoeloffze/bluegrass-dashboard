@@ -6,16 +6,16 @@ import Table from "@/components/dashboard/Table";
 import Pagination from "@/components/ui/Pagination";
 import { Practice } from "@/types/practice";
 import { supabase } from "@/utils/supabaseClient";
-import { useUser } from "@/context/UserContext";
 import { usePagination } from "@/hooks/usePagination";
 import { logActivity } from "@/lib/logActivity";
+import { useUserInfo } from "@/hooks/useUserInfo";
 
 export default function PracticeSection({ limit }: { limit?: number }) {
   const [practices, setPractices] = useState<Practice[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const user = useUser();
 
+  const userInfo = useUserInfo();
   const pageSize = 8;
 
   useEffect(() => {
@@ -38,17 +38,12 @@ export default function PracticeSection({ limit }: { limit?: number }) {
     loadPractices();
   }, []);
 
-  const getUserInfo = () => ({
-    name: user?.user_metadata?.name || user?.email || "Unknown",
-    email: user?.email || "no-email",
-  });
-
   const handleDelete = async (id: number) => {
     const practice = practices.find((p) => p.id === id);
-    if (!practice || !user) return;
+    if (!practice || !userInfo) return;
 
     await logActivity({
-      user: getUserInfo(),
+      user: userInfo,
       action: "Deleted Practice",
       target: practice.name,
       status: "Warning",
@@ -84,9 +79,9 @@ export default function PracticeSection({ limit }: { limit?: number }) {
     );
 
     const practice = practices.find((p) => p.id === id);
-    if (practice) {
+    if (practice && userInfo) {
       await logActivity({
-        user: getUserInfo(),
+        user: userInfo,
         action: `${newStatus === "Active" ? "Enabled" : "Disabled"} Practice`,
         target: practice.name,
         status: "Success",
@@ -96,13 +91,13 @@ export default function PracticeSection({ limit }: { limit?: number }) {
 
   const handleEdit = async (id: number, updated: Partial<Practice>) => {
     const practice = practices.find((p) => p.id === id);
-    if (!practice || !user) return;
+    if (!practice || !userInfo) return;
 
     const updatedFields: Partial<Practice> = {
       ...updated,
       actions: {
         ...(practice.actions || {}),
-        lastEditedBy: user.email,
+        lastEditedBy: userInfo.email,
         lastEditedAt: new Date().toISOString(),
       },
     };
@@ -129,7 +124,7 @@ export default function PracticeSection({ limit }: { limit?: number }) {
     );
 
     await logActivity({
-      user: getUserInfo(),
+      user: userInfo,
       action: "Edited Practice",
       target: data.name || "Unknown",
       status: "Success",
@@ -142,10 +137,10 @@ export default function PracticeSection({ limit }: { limit?: number }) {
     : getPage(currentPage);
 
   const columns = [
-    { label: "Practise Name", key: "name" },
-    { label: "Tel No", key: "phone" },
-    { label: "Email", key: "email" },
-    { label: "Date Created", key: "date" },
+    { label: "Practise Name", key: "name" as keyof Practice },
+    { label: "Tel No", key: "phone" as keyof Practice },
+    { label: "Email", key: "email" as keyof Practice },
+    { label: "Date Created", key: "date" as keyof Practice },
   ];
 
   return (

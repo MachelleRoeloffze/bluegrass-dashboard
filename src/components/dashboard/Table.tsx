@@ -1,23 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import TableRow from "@/components/dashboard/TableRow";
 import TableSkeleton from "@/components/dashboard/skeletonLoaders/TableSkeleton";
 import { usePagination } from "@/hooks/usePagination";
 
-interface TableColumn {
+export interface TableColumn<T> {
   label: string;
-  key: string;
+  key: keyof T;
 }
 
-interface TableProps {
-  columns: TableColumn[];
-  data: any[];
-  statusField: string;
+interface TableProps<T> {
+  columns: TableColumn<T>[];
+  data: T[];
+  statusField: keyof T;
   onDelete: (id: number) => void;
-  onToggleStatus: (
-    id: number,
-    currentStatus: "Active" | "Disabled"
-  ) => void | Promise<void>;
-  onSave: (id: number, updated: any) => void | Promise<void>;
+  onToggleStatus: (id: number, currentStatus: "Active" | "Disabled") => void | Promise<void>;
+  onSave: (id: number, updated: Partial<T>) => void | Promise<void>;
   editable?: boolean;
   loading?: boolean;
   emptyMessage?: string;
@@ -27,7 +24,7 @@ interface TableProps {
   onPageChange?: (page: number) => void;
 }
 
-export default function Table({
+export default function Table<T extends { id: number }>({
   columns,
   data,
   statusField,
@@ -41,7 +38,7 @@ export default function Table({
   pageSize = 10,
   currentPage = 1,
   onPageChange,
-}: TableProps) {
+}: TableProps<T>) {
   const { getPage } = usePagination(data, pageSize);
   const pagedData = paginate ? getPage(currentPage) : data;
 
@@ -50,7 +47,7 @@ export default function Table({
 
   useEffect(() => {
     if (paginate && onPageChange && currentPage > 1 && pagedData.length === 0) {
-      onPageChange(1); // reset page if data shrinks
+      onPageChange(1);
     }
   }, [pagedData, paginate, onPageChange, currentPage]);
 
@@ -59,7 +56,7 @@ export default function Table({
       <div className="table">
         <div className="table__header">
           {columns.map((col) => (
-            <div key={col.key} className="table__header-cell">
+            <div key={String(col.key)} className="table__header-cell">
               {col.label}
             </div>
           ))}
@@ -71,7 +68,7 @@ export default function Table({
           {showSkeleton ? (
             <TableSkeleton
               columns={columns}
-              rowCount={data?.length > 0 ? data.length : 5}
+              rowCount={data.length > 0 ? data.length : 5}
               showStatus={editable}
               showActions={editable}
             />
@@ -86,9 +83,9 @@ export default function Table({
                 statusField={statusField}
                 onDelete={() => onDelete(rowData.id)}
                 onToggleStatus={() =>
-                  onToggleStatus(rowData.id, rowData[statusField])
+                  onToggleStatus(rowData.id, rowData[statusField] as "Active" | "Disabled")
                 }
-                onSave={(updated) => onSave(rowData.id, updated)}
+                onSave={(id: number, updated: Partial<T>) => onSave(id, updated)}
                 editable={editable}
               />
             ))

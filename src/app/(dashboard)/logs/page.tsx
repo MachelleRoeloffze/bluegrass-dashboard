@@ -1,6 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
+type TableColumn<T> = {
+  label: string;
+  key: keyof T;
+};
 import Card from "@/components/common/Card";
 import Table from "@/components/dashboard/Table";
 import { supabase } from "@/utils/supabaseClient";
@@ -53,7 +58,7 @@ export default function LogPage() {
 
   const { totalPages } = usePagination(logs, pageSize);
 
-  const columns = [
+  const columns: TableColumn<LogEntry>[] = [
     { label: "Timestamp", key: "timestamp" },
     { label: "Action", key: "action" },
     { label: "Target", key: "target" },
@@ -71,13 +76,14 @@ export default function LogPage() {
       <SectionHeading title="Logs" />
       <Card>
         <div className="logs">
+
           <Table
             columns={columns}
             data={formattedLogs}
             statusField="status"
-            onDelete={() => {}}
-            onToggleStatus={() => {}}
-            onSave={() => {}}
+            onDelete={() => { }}
+            onToggleStatus={() => { }}
+            onSave={() => { }}
             editable={false}
             loading={loading}
             paginate={true}

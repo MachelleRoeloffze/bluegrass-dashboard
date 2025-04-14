@@ -1,17 +1,18 @@
+import { TableColumn } from "@/types/table";
 import { useState } from "react";
-import Toggle from "@/components/ui/Toggle";
+import Toggle from "../ui/Toggle";
 
-interface TableRowProps {
-  rowData: any;
-  columns: { label: string; key: string }[];
-  statusField: string;
-  onDelete: () => void;
-  onToggleStatus: () => void;
-  onSave: (updated: any) => void;
+interface TableRowProps<T extends { id: number }> {
+  rowData: T;
+  columns: TableColumn<T>[];
+  statusField?: keyof T; // Optional for logs etc.
+  onDelete?: (id: number) => void | Promise<void>;
+  onToggleStatus?: (id: number, status: "Active" | "Disabled") => void | Promise<void>;
+  onSave?: (id: number, updated: Partial<T>) => void | Promise<void>;
   editable?: boolean;
 }
 
-export default function TableRow({
+export default function TableRow<T extends { id: number }>({
   rowData,
   columns,
   statusField,
@@ -19,51 +20,57 @@ export default function TableRow({
   onToggleStatus,
   onSave,
   editable = true,
-}: TableRowProps) {
+}: TableRowProps<T>) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editData, setEditData] = useState(rowData);
+  const [editData, setEditData] = useState<Partial<T>>(rowData);
 
-  const handleChange = (key: string, value: string) => {
+  const handleChange = (key: keyof T, value: string) => {
     setEditData({ ...editData, [key]: value });
   };
 
   const handleSave = () => {
-    onSave(editData);
+    if (onSave) onSave(rowData.id, editData);
     setIsEditing(false);
+  };
+
+
+  const handleToggle = () => {
+    if (!statusField || !onToggleStatus) return;
+    const currentStatus = rowData[statusField] as "Active" | "Disabled";
+    onToggleStatus(rowData.id, currentStatus);
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(rowData.id);
+    }
   };
 
   return (
     <div className="table__row">
       {columns.map((col) => (
-        <div key={col.key} className="table__cell">
-          {editable && isEditing ? (
+        <div key={String(col.key)} className="table__cell">
+          {editable && isEditing && col.key !== "date" ? (
             <input
               className="table__input"
-              value={editData[col.key] ?? ""}
+              value={String(editData[col.key] ?? "")}
               onChange={(e) => handleChange(col.key, e.target.value)}
             />
           ) : (
             <span>
-              {rowData[col.key] !== undefined && rowData[col.key] !== null
-                ? rowData[col.key]
+              {typeof rowData[col.key] === "string" || typeof rowData[col.key] === "number"
+                ? (rowData[col.key] as string | number)
                 : "—"}
             </span>
           )}
         </div>
       ))}
 
-      {editable && (
+      {editable && statusField && (
         <div className="table__cell table__cell--status">
-          <Toggle
-            checked={rowData[statusField] === "Active"}
-            onChange={onToggleStatus}
-          />
-          <span
-            className={`table__status table__status--${String(
-              rowData[statusField]
-            ).toLowerCase()}`}
-          >
-            {rowData[statusField]}
+          <Toggle checked={rowData[statusField] === "Active"} onChange={handleToggle} />
+          <span className={`table__status table__status--${String(rowData[statusField]).toLowerCase()}`}>
+            {rowData[statusField] as string}
           </span>
         </div>
       )}
@@ -75,16 +82,15 @@ export default function TableRow({
               <i className="icon icon-checkmark" />
             </button>
           ) : (
-            <button
-              className="table__icon-btn"
-              onClick={() => setIsEditing(true)}
-            >
+            <button className="table__icon-btn" onClick={() => setIsEditing(true)}>
               <i className="icon icon-edit" />
             </button>
           )}
-          <button className="table__icon-btn" onClick={onDelete}>
-            <i className="icon icon-trash" />
-          </button>
+          {onDelete && (
+            <button className="table__icon-btn" onClick={handleDelete}>
+              <i className="icon icon-trash" />
+            </button>
+          )}
         </div>
       )}
     </div>

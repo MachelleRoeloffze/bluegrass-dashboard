@@ -1,4 +1,3 @@
-// src/components/ui/Pagination.tsx
 interface PaginationProps {
   current: number;
   total: number;
@@ -39,7 +38,7 @@ export default function Pagination({
         onClick={() => onPageChange(Math.max(1, current - 1))}
         disabled={current === 1}
       >
-        &lt;
+        <i className="icon icon-right" />
       </button>
 
       {range().map((item, index) => (
@@ -58,7 +57,7 @@ export default function Pagination({
         onClick={() => onPageChange(Math.min(total, current + 1))}
         disabled={current === total}
       >
-        &gt;
+        <i className="icon icon-right" />
       </button>
     </div>
   );

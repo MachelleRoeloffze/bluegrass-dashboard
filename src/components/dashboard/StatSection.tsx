@@ -69,8 +69,10 @@ export default function StatSection() {
     },
   ];
 
-  return (
+  return (<>
+
     <div className="stat-section">
+
       {stats.map((s, i) => (
         <StatCard
           key={i}
@@ -82,5 +84,6 @@ export default function StatSection() {
         />
       ))}
     </div>
+  </>
   );
 }

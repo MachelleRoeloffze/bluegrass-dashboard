@@ -1,14 +1,15 @@
 import { supabase } from "@/utils/supabaseClient";
 import { NextRequest, NextResponse } from "next/server";
 
-// PATCH request — update practice + actions + log
-export async function PATCH(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
-  const id = context.params.id;
-  const body = await req.json();
+function extractId(req: NextRequest) {
+  return req.nextUrl.pathname.split("/").pop(); // /api/practices/[id]
+}
 
+export async function PATCH(req: NextRequest) {
+  const id = extractId(req);
+  if (!id) return NextResponse.json({ error: "Missing ID" }, { status: 400 });
+
+  const body = await req.json();
   const userEmail = "machelleroeloffze@gmail.com";
 
   const updateWithActions = {
@@ -45,15 +46,11 @@ export async function PATCH(
   return NextResponse.json(data);
 }
 
-// DELETE request — update actions + log + hard delete
-export async function DELETE(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
-  const id = context.params.id;
-  const userEmail = "machelleroeloffze@gmail.com";
+export async function DELETE(req: NextRequest) {
+  const id = extractId(req);
+  if (!id) return NextResponse.json({ error: "Missing ID" }, { status: 400 });
 
-  console.log("🗑️ Deleting practice with ID:", id);
+  const userEmail = "machelleroeloffze@gmail.com";
 
   await supabase
     .from("practices")

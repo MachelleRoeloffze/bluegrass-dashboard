@@ -11,7 +11,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    color: #333;
+    color: #67adb9;
 
     &.active {
       background: #67adb9;
@@ -22,5 +22,14 @@
     &:hover {
       background: #f1f5f9;
     }
+
+    i {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &__button:first-of-type i {
+    transform: rotate(180deg);
   }
 }

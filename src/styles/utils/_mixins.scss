@@ -1,17 +1,15 @@
 @use "breakpoints" as *;
-// Font mixins for various text styles
+
 @mixin font-large {
   font-size: 32px;
   font-weight: 700;
   line-height: 48px;
 
-  // Adjustments for tablets and smaller screens (max-md)
   @include respond-to(md, max) {
     font-size: 24px;
     line-height: 30px;
   }
 
-  // Adjustments for mobile (xs, xm)
   @include respond-to(xs, max) {
     font-size: 16px;
     line-height: 24px;
@@ -23,13 +21,13 @@
   font-weight: 700;
   line-height: 36px;
 
-  // Adjustments for tablets and smaller screens (max-md)
+
   @include respond-to(md, max) {
     font-size: 20px;
     line-height: 28px;
   }
 
-  // Adjustments for mobile (xs, xm)
+
   @include respond-to(xs, max) {
     font-size: 14px;
     line-height: 22px;
@@ -41,13 +39,12 @@
   font-weight: 700;
   line-height: 28px;
 
-  // Adjustments for tablets and smaller screens (max-md)
+
   @include respond-to(md, max) {
     font-size: 16px;
     line-height: 24px;
   }
 
-  // Adjustments for mobile (xs, xm)
   @include respond-to(xs, max) {
     font-size: 14px;
     line-height: 22px;
@@ -59,13 +56,13 @@
   font-weight: 600;
   line-height: 24px;
 
-  // Adjustments for tablets and smaller screens (max-md)
+
   @include respond-to(md, max) {
     font-size: 14px;
     line-height: 22px;
   }
 
-  // Adjustments for mobile (xs, xm)
+
   @include respond-to(xs, max) {
     font-size: 12px;
     line-height: 20px;
@@ -77,7 +74,7 @@
   font-weight: 400;
   line-height: 24px;
 
-  // Adjustments for mobile (xs, xm)
+
   @include respond-to(xs, max) {
     font-size: 14px;
     line-height: 22px;
@@ -91,7 +88,7 @@
   letter-spacing: 0px;
   vertical-align: middle;
 
-  // Adjustments for mobile (xs, xm)
+
   @include respond-to(xs, max) {
     font-size: 13px;
     line-height: 20px;

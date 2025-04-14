@@ -72,7 +72,6 @@ export default function LogPage() {
 
   return (
     <>
-      {" "}
       <SectionHeading title="Logs" />
       <Card>
         <div className="logs">

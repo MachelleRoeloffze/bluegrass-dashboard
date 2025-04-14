@@ -23,7 +23,7 @@
 @use "dashboard/table";
 @use "dashboard/tableRow";
 
-@use"common/sectionHeading";
+@use "common/sectionHeading";
 
 @use "dashboard/dashboardSkeletons/dashboardSkeleton";
 @use "dashboard/dashboardSkeletons/tableSkeleton";
@@ -33,5 +33,6 @@
 @use "ui/icon";
 @use "ui/toggle";
 @use "ui/input";
+@use "ui/button";
 @use "ui/logoLoader";
 @use "ui/pagination";

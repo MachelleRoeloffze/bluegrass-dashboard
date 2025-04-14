@@ -5,6 +5,7 @@ import Toggle from "@/components/ui/Toggle";
 import { logActivity } from "@/lib/log";
 import { useUserInfo } from "@/hooks/useUserInfo";
 import { PracticeActions } from "@/types/practice";
+import Input from "../ui/Input";
 
 interface Props {
   name: string;
@@ -76,21 +77,21 @@ export default function PracticeRow({
     <div className={`table__row${isEditing ? " table__row--editing" : ""}`}>
       <div className="table__cell">
         {isEditing ? (
-          <input className="table__input" value={editName} onChange={(e) => setEditName(e.target.value)} />
+          <Input value={editName} onChange={(e) => setEditName(e.target.value)} />
         ) : (
           <span>{name}</span>
         )}
       </div>
       <div className="table__cell">
         {isEditing ? (
-          <input className="table__input" value={editPhone} onChange={(e) => setEditPhone(e.target.value)} />
+          <Input value={editPhone} onChange={(e) => setEditPhone(e.target.value)} />
         ) : (
           <span>{phone}</span>
         )}
       </div>
       <div className="table__cell">
         {isEditing ? (
-          <input className="table__input" value={editEmail} onChange={(e) => setEditEmail(e.target.value)} />
+          <Input value={editEmail} onChange={(e) => setEditEmail(e.target.value)} />
         ) : (
           <span>{email}</span>
         )}

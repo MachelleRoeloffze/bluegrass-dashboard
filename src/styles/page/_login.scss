@@ -1,8 +1,9 @@
+@use "../utils/mixins" as *;
 .login-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100dvh;
+  height: 100vh;
   background: #f7f9fa;
 }
 
@@ -16,14 +17,30 @@
   text-align: center;
 
   &__title {
-    font-size: 1.5rem;
+    @include font-medium;
     margin-bottom: 0.5rem;
   }
 
   &__subtitle {
-    font-size: 0.95rem;
-    color: #666;
+    @include font-body-small;
     margin-bottom: 1.5rem;
+  }
+
+  .login-card__password {
+    @include font-body-small;
+
+    a {
+      text-decoration: none;
+      color: #4b9aad;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &:visited {
+        text-decoration: none;
+      }
+    }
   }
 
   &__form {
@@ -36,20 +53,6 @@
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 0.95rem;
-    }
-
-    button {
-      padding: 0.75rem;
-      border: none;
-      background-color: #78a8ae;
-      color: white;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #6b9ba2;
-      }
     }
   }
 

@@ -17,7 +17,7 @@
     &-header,
     &-row {
       display: grid;
-      grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr; // match with practice row
+      grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr; 
       padding: 16px 24px;
       font-size: 14px;
       align-items: center;
@@ -32,7 +32,7 @@
     &-row {
       border-top: 1px solid #e5e7eb;
       display: grid;
-      grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr; // ensure the row also follows this layout
+      grid-template-columns: 2fr 1.5fr 2fr 1.5fr 1.5fr 1fr; 
 
       &:hover {
         background-color: #f9fafb;

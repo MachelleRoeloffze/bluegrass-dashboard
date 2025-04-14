@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabaseClient";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -50,21 +52,21 @@ export default function SignupPage() {
         <p className="login-card__subtitle">Sign up to get started.</p>
 
         <form className="login-card__form" onSubmit={handleSignup}>
-          <input
+          <Input
             type="text"
             placeholder="Full name*"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             required
           />
-          <input
+          <Input
             type="email"
             placeholder="Email address*"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <input
+          <Input
             type="password"
             placeholder="Password*"
             value={password}
@@ -72,9 +74,9 @@ export default function SignupPage() {
             required
           />
 
-          <button type="submit" disabled={loading}>
+          <Button type="submit" disabled={loading}>
             {loading ? "Creating..." : "Sign Up"}
-          </button>
+          </Button>
         </form>
 
         <p className="login-card__signup">

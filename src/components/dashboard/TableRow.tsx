@@ -1,6 +1,7 @@
 import { TableColumn } from "@/types/table";
 import { useState } from "react";
 import Toggle from "../ui/Toggle";
+import Input from "../ui/Input";
 
 interface TableRowProps<T extends { id: number }> {
   rowData: T;
@@ -51,8 +52,7 @@ export default function TableRow<T extends { id: number }>({
       {columns.map((col) => (
         <div key={String(col.key)} className="table__cell">
           {editable && isEditing && col.key !== "date" ? (
-            <input
-              className="table__input"
+            <Input
               value={String(editData[col.key] ?? "")}
               onChange={(e) => handleChange(col.key, e.target.value)}
             />

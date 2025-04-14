@@ -31,13 +31,13 @@
     }
   }
 
-  // checked styles
+
   input:checked + .toggle__slider::before {
     transform: translate(100%, -50%);
-    background-color: #67adb9; // on color
+    background-color: #67adb9; 
   }
 
   input:checked + .toggle__slider {
-    background-color: #b3dfe7; // optional for track color change
+    background-color: #b3dfe7; 
   }
 }

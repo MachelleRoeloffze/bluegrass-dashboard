@@ -1,26 +1,36 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabaseClient";
+import { useFormValidation } from "@/hooks/useFormValidation";
 import Image from "next/image";
 import Link from "next/link";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, errors, handleChange, validateAll, setErrors } = useFormValidation({
+    email: "",
+    password: "",
+  });
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const isValid = validateAll();
+    if (!isValid) return;
+
     const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+      email: values.email,
+      password: values.password,
     });
 
     if (error) {
-      alert("Login failed: " + error.message);
+      setErrors((prev) => ({
+        ...prev,
+        password: error.message || "Login failed",
+      }));
       return;
     }
 
@@ -33,7 +43,7 @@ export default function LoginPage() {
         <Image
           src="/images/fertility-journey-logo.svg"
           alt="MyFertilityJourney"
-          width={180}
+          width={200}
           height={60}
           className="login-card__logo"
         />
@@ -41,25 +51,26 @@ export default function LoginPage() {
         <p className="login-card__subtitle">
           Log in to continue to <strong>My Fertility Journey</strong>.
         </p>
-        <form className="login-card__form" onSubmit={handleLogin}>
-          <input
+
+        <form className="login-card__form" onSubmit={handleLogin} noValidate>
+          <Input
+            name="email"
             type="email"
             placeholder="Email address*"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            value={values.email}
+            onChange={(e) => handleChange("email", e.target.value)}
+            error={errors.email}
           />
-          <input
+          <Input
+            name="password"
             type="password"
             placeholder="Password*"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            value={values.password}
+            onChange={(e) => handleChange("password", e.target.value)}
+            error={errors.password}
           />
-          <a href="#" className="login-card__forgot">
-            Forgot password?
-          </a>
-          <button type="submit">Continue</button>
+          <a className="login-card__password" href="/forgot-password">Forgot your password?</a>
+          <Button type="submit">Continue</Button>
         </form>
 
         <p className="login-card__signup">

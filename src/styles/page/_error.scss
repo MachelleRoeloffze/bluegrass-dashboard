@@ -1,9 +1,9 @@
+@use "../utils/mixins" as *;
 .error-page {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f9f9fb;
 
   &__content {
     text-align: center;
@@ -15,22 +15,17 @@
   }
 
   &__title {
-    font-size: 72px;
-    font-weight: 700;
-    color: #2d2d2d;
+    @include font-large;
     margin-bottom: 16px;
   }
 
   &__subtitle {
-    font-size: 24px;
-    font-weight: 500;
+    @include font-small;
     margin-bottom: 8px;
-    color: #666;
   }
 
   &__text {
-    font-size: 16px;
-    color: #999;
+    @include font-body-small;
     margin-bottom: 32px;
   }
 
@@ -38,25 +33,5 @@
     display: flex;
     justify-content: center;
     gap: 16px;
-
-    .btn {
-      padding: 10px 24px;
-      border-radius: 6px;
-      font-weight: 500;
-      text-decoration: none;
-      cursor: pointer;
-
-      &--primary {
-        background-color: #2ac97a;
-        color: #fff;
-        border: none;
-      }
-
-      &--secondary {
-        background-color: #f1f1f1;
-        color: #333;
-        border: none;
-      }
-    }
   }
 }

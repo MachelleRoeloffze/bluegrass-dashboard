@@ -1,0 +1,51 @@
+@use "../utils/mixins" as *;
+
+.btn {
+  @include font-body-small;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  text-decoration: none;
+
+  i {
+    font-size: 1rem;
+  }
+
+  &--primary {
+    background-color: #67adb9;
+    color: #fff;
+
+    &:hover {
+      transform: scale(1.04);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &--secondary {
+    background-color: #f3f4f6;
+    color: #374151;
+
+    &:hover {
+      background-color: #e5e7eb;
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: #7ba2b9;
+
+    &:hover {
+      background-color: rgba(123, 162, 185, 0.1);
+    }
+  }
+}

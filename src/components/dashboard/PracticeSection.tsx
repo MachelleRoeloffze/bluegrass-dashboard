@@ -3,14 +3,20 @@
 import { useEffect, useState } from "react";
 import Card from "@/components/common/Card";
 import Table from "@/components/dashboard/Table";
+import Pagination from "@/components/ui/Pagination";
 import { Practice } from "@/types/practice";
 import { supabase } from "@/utils/supabaseClient";
 import { useUser } from "@/context/UserContext";
+import { usePagination } from "@/hooks/usePagination";
 import { logActivity } from "@/lib/logActivity";
 
 export default function PracticeSection({ limit }: { limit?: number }) {
   const [practices, setPractices] = useState<Practice[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const user = useUser();
+
+  const pageSize = 8;
 
   useEffect(() => {
     const loadPractices = async () => {
@@ -21,21 +27,21 @@ export default function PracticeSection({ limit }: { limit?: number }) {
 
       if (error) {
         console.error("Supabase error:", error.message);
+        setLoading(false);
         return;
       }
 
       setPractices(data || []);
+      setLoading(false);
     };
 
     loadPractices();
   }, []);
 
-  const getUserInfo = () => {
-    return {
-      name: user?.user_metadata?.name || user?.email || "Unknown",
-      email: user?.email || "no-email",
-    };
-  };
+  const getUserInfo = () => ({
+    name: user?.user_metadata?.name || user?.email || "Unknown",
+    email: user?.email || "no-email",
+  });
 
   const handleDelete = async (id: number) => {
     const practice = practices.find((p) => p.id === id);
@@ -62,6 +68,7 @@ export default function PracticeSection({ limit }: { limit?: number }) {
     currentStatus: "Active" | "Disabled"
   ) => {
     const newStatus = currentStatus === "Active" ? "Disabled" : "Active";
+
     const { error } = await supabase
       .from("practices")
       .update({ status: newStatus })
@@ -129,7 +136,10 @@ export default function PracticeSection({ limit }: { limit?: number }) {
     });
   };
 
-  const visiblePractices = limit ? practices.slice(0, limit) : practices;
+  const { totalPages, getPage } = usePagination(practices, pageSize);
+  const paginatedPractices = limit
+    ? practices.slice(0, limit)
+    : getPage(currentPage);
 
   const columns = [
     { label: "Practise Name", key: "name" },
@@ -141,16 +151,27 @@ export default function PracticeSection({ limit }: { limit?: number }) {
   return (
     <Card>
       <div className="practice-section">
-        <h3 className="practice-section__title">Newest Practices</h3>
+        {limit && <h3 className="practice-section__title">Newest Practices</h3>}
 
         <Table
           columns={columns}
-          data={visiblePractices}
+          data={paginatedPractices}
           statusField="status"
           onDelete={handleDelete}
           onToggleStatus={handleStatusToggle}
           onSave={handleEdit}
+          loading={loading}
         />
+
+        {!limit && totalPages > 1 && (
+          <div className="practice-section__pagination">
+            <Pagination
+              current={currentPage}
+              total={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+        )}
 
         {limit && (
           <div className="practice-section__footer">

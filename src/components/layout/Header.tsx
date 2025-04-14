@@ -3,18 +3,20 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/utils/supabaseClient";
 import { useUser } from "@/context/UserContext";
+import { useAvatar } from "@/hooks/useAvatar";
 import PopoverCard from "@/components/ui/PopoverCard";
 import Link from "next/link";
 
 export default function Header() {
   const user = useUser();
+  const { fullName, initials } = useAvatar();
+
   const [notifications, setNotifications] = useState<
     {
       id: number;
       title: string;
       subtitle: string;
       date: string;
-      avatar: string;
     }[]
   >([]);
 
@@ -42,13 +44,6 @@ export default function Header() {
   const clearAll = () => setNotifications([]);
   const deleteNotification = (id: number) =>
     setNotifications((prev) => prev.filter((n) => n.id !== id));
-
-  const fullName =
-    user?.user_metadata?.name ||
-    user?.user_metadata?.full_name ||
-    user?.email ||
-    "User";
-  const profilePic = user?.user_metadata?.picture || "/avatar.svg";
 
   return (
     <header className="header">
@@ -79,7 +74,13 @@ export default function Header() {
 
             {notifications.map((notif) => (
               <div key={notif.id} className="popover-notifications__item">
-                <img src={notif.avatar} alt="User" className="avatar" />
+                <div className="avatar avatar--initials">
+                  {notif.title
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()}
+                </div>
                 <div>
                   <p className="title">{notif.title}</p>
                   <p className="subtitle">{notif.subtitle}</p>
@@ -103,7 +104,7 @@ export default function Header() {
           </div>
         </PopoverCard>
 
-        <img className="avatar" src={profilePic} alt={fullName} />
+        <div className="avatar avatar--initials">{initials}</div>
         <span className="user">{fullName}</span>
 
         <PopoverCard

@@ -1,3 +1,14 @@
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
+  border-radius: 16px;
+
+  .table {
+    min-width: 768px;
+  }
+}
 .table {
   background: #fff;
   border-radius: 16px;

@@ -23,7 +23,10 @@
 @use "dashboard/table";
 @use "dashboard/tableRow";
 
+@use"common/sectionHeading";
+
 @use "dashboard/dashboardSkeletons/dashboardSkeleton";
+@use "dashboard/dashboardSkeletons/tableSkeleton";
 
 @use "ui/card";
 @use "ui/popoverCard";

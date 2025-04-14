@@ -1,13 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "../../../utils/supabaseClient";
+import Card from "@/components/common/Card";
+import Table from "@/components/dashboard/Table";
+import { supabase } from "@/utils/supabaseClient";
 import { useUser } from "@/context/UserContext";
 import { usePagination } from "@/hooks/usePagination";
 import Pagination from "@/components/ui/Pagination";
+import SectionHeading from "@/components/common/SectionHeading";
 
 type LogEntry = {
-  id: string;
+  id: number;
   timestamp: string;
   user_email: string;
   action: string;
@@ -18,17 +21,13 @@ type LogEntry = {
 export default function LogPage() {
   const user = useUser();
   const [logs, setLogs] = useState<LogEntry[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 8;
 
   useEffect(() => {
     const fetchLogs = async () => {
-      if (!user || !user.email) {
-        console.warn("⛔ No user or user.email found:", user);
-        return;
-      }
-
-      console.log("✅ User email:", user.email);
+      if (!user?.email) return;
 
       const { data, error } = await supabase
         .from("logs")
@@ -36,17 +35,15 @@ export default function LogPage() {
         .order("timestamp", { ascending: false });
 
       if (error) {
-        console.error("❌ Supabase logs error:", error.message);
+        console.error("Failed to fetch logs:", error.message);
         return;
       }
 
-      console.log("✅ All logs:", data);
-
       const filtered = data.filter(
-        (log) => log.user_email?.toLowerCase() === user.email!.toLowerCase()
+        (log) =>
+          log.user_email?.toLowerCase() === (user.email ?? "").toLowerCase()
       );
 
-      console.log("✅ Filtered logs:", filtered);
       setLogs(filtered);
       setLoading(false);
     };
@@ -54,45 +51,52 @@ export default function LogPage() {
     fetchLogs();
   }, [user]);
 
-  const { totalPages, getPage } = usePagination(logs, 10);
-  const paginatedLogs = getPage(currentPage);
+  const { totalPages } = usePagination(logs, pageSize);
 
-  if (!user) return <p className="logs__loading">Loading user...</p>;
-  if (loading) return <p className="logs__loading">Loading logs...</p>;
+  const columns = [
+    { label: "Timestamp", key: "timestamp" },
+    { label: "Action", key: "action" },
+    { label: "Target", key: "target" },
+    { label: "Status", key: "status" },
+  ];
+
+  const formattedLogs = logs.map((log) => ({
+    ...log,
+    timestamp: log.timestamp ? new Date(log.timestamp).toLocaleString() : "—",
+  }));
 
   return (
-    <div className="logs">
-      <h1 className="logs__heading">My Activity Logs</h1>
+    <>
+      {" "}
+      <SectionHeading title="Logs" />
+      <Card>
+        <div className="logs">
+          <Table
+            columns={columns}
+            data={formattedLogs}
+            statusField="status"
+            onDelete={() => {}}
+            onToggleStatus={() => {}}
+            onSave={() => {}}
+            editable={false}
+            loading={loading}
+            paginate={true}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
 
-      <div className="logs__table">
-        <div className="logs__table-header">
-          <div>Timestamp</div>
-          <div>Action</div>
-          <div>Target</div>
-          <div>Status</div>
-        </div>
-
-        {paginatedLogs.map((log) => (
-          <div key={log.id} className="logs__table-row">
-            <div>{new Date(log.timestamp).toLocaleString()}</div>
-            <div>{log.action}</div>
-            <div>{log.target}</div>
-            <div
-              className={`logs__status logs__status--${log.status.toLowerCase()}`}
-            >
-              {log.status}
+          {totalPages > 1 && (
+            <div className="logs__pagination">
+              <Pagination
+                current={currentPage}
+                total={totalPages}
+                onPageChange={setCurrentPage}
+              />
             </div>
-          </div>
-        ))}
-      </div>
-
-      {logs.length > 0 && (
-        <Pagination
-          current={currentPage}
-          total={totalPages}
-          onPageChange={(p) => setCurrentPage(p)}
-        />
-      )}
-    </div>
+          )}
+        </div>
+      </Card>
+    </>
   );
 }

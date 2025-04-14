@@ -1,11 +1,12 @@
 "use client";
 
+import SectionHeading from "@/components/common/SectionHeading";
 import PracticeSection from "@/components/dashboard/PracticeSection";
 
 export default function PracticesPage() {
   return (
     <div className="practices-page">
-      <h1 className="practices-page__heading">All Practices</h1>
+      <SectionHeading title="All Practices" />
       <PracticeSection />
     </div>
   );

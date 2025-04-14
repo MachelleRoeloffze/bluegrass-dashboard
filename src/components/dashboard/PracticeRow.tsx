@@ -38,13 +38,27 @@ export default function PracticeRow({
   const [editPhone, setEditPhone] = useState(phone);
   const [editEmail, setEditEmail] = useState(email);
 
+  const getUserInfo = () => {
+    if (!user || !user.email) return null;
+
+    const name =
+      user.user_metadata?.name || user.user_metadata?.full_name || user.email;
+
+    return {
+      name: String(name),
+      email: String(user.email),
+    };
+  };
+
   const handleSave = async () => {
     onSave({ name: editName, phone: editPhone, email: editEmail });
     setIsEditing(false);
 
-    if (!user) return;
+    const userInfo = getUserInfo();
+    if (!userInfo) return;
+
     await logActivity({
-      user,
+      user: userInfo,
       action: "Edited Practice",
       target: name,
       status: "Success",
@@ -54,9 +68,11 @@ export default function PracticeRow({
   const handleToggle = async () => {
     onToggleStatus();
 
-    if (!user) return;
+    const userInfo = getUserInfo();
+    if (!userInfo) return;
+
     await logActivity({
-      user,
+      user: userInfo,
       action: status === "Active" ? "Disabled Practice" : "Enabled Practice",
       target: name,
       status: "Success",
@@ -66,9 +82,11 @@ export default function PracticeRow({
   const handleDelete = async () => {
     onDelete();
 
-    if (!user) return;
+    const userInfo = getUserInfo();
+    if (!userInfo) return;
+
     await logActivity({
-      user,
+      user: userInfo,
       action: "Deleted Practice",
       target: name,
       status: "Warning",

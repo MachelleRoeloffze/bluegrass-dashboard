@@ -32,6 +32,7 @@ export default function Input({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        required={required}
         aria-invalid={!!error}
         aria-describedby={error ? `${inputId}-error` : undefined}
         autoComplete="off"

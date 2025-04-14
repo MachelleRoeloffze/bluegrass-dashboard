@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { supabase } from "@/utils/supabaseClient";
 import { useFormValidation } from "@/hooks/useFormValidation";
 import Image from "next/image";
@@ -10,10 +11,12 @@ import Input from "@/components/ui/Input";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { values, errors, handleChange, validateAll, setErrors } = useFormValidation({
-    email: "",
-    password: "",
-  });
+  const [loading, setLoading] = useState(false);
+  const { values, errors, handleChange, validateAll, setErrors } =
+    useFormValidation({
+      email: "",
+      password: "",
+    });
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,10 +24,14 @@ export default function LoginPage() {
     const isValid = validateAll();
     if (!isValid) return;
 
+    setLoading(true);
+
     const { error } = await supabase.auth.signInWithPassword({
       email: values.email,
       password: values.password,
     });
+
+    setLoading(false);
 
     if (error) {
       setErrors((prev) => ({
@@ -47,6 +54,7 @@ export default function LoginPage() {
           height={60}
           className="login-card__logo"
         />
+
         <h2 className="login-card__title">Welcome</h2>
         <p className="login-card__subtitle">
           Log in to continue to <strong>My Fertility Journey</strong>.
@@ -69,8 +77,14 @@ export default function LoginPage() {
             onChange={(e) => handleChange("password", e.target.value)}
             error={errors.password}
           />
-          <a className="login-card__password" href="/forgot-password">Forgot your password?</a>
-          <Button type="submit">Continue</Button>
+
+          <a className="login-card__password" href="/forgot-password">
+            Forgot your password?
+          </a>
+
+          <Button type="submit" loading={loading}>
+            Continue
+          </Button>
         </form>
 
         <p className="login-card__signup">

@@ -1,7 +1,9 @@
+
 export default function LogoLoader() {
   return (
     <div className="logo-loader">
       <svg
+        data-testid="logo-loader"
         className="logo-stroke"
         width="500"
         height="500"

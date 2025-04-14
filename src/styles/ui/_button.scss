@@ -17,6 +17,11 @@
     font-size: 1rem;
   }
 
+  &__spinner {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+
   &--primary {
     background-color: #67adb9;
     color: #fff;
@@ -47,5 +52,15 @@
     &:hover {
       background-color: rgba(123, 162, 185, 0.1);
     }
+  }
+}
+
+.spinning {
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

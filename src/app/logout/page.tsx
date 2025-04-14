@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabaseClient";
 import LogoLoader from "@/components/ui/LogoLoader";
 
+
 export default function LogoutPage() {
   const router = useRouter();
 

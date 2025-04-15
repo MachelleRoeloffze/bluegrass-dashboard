@@ -28,19 +28,7 @@
 
   .login-card__password {
     @include font-body-small;
-
-    a {
-      text-decoration: none;
-      color: #4b9aad;
-
-      &:hover {
-        text-decoration: underline;
-      }
-
-      &:visited {
-        text-decoration: none;
-      }
-    }
+    color: #4b9aad;
   }
 
   &__form {

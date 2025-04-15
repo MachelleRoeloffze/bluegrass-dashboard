@@ -1,5 +1,12 @@
 "use client";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/types/supabase"; 
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/types/supabase";
 
-export const supabase = createClientComponentClient<Database>();
+export const supabase = createBrowserSupabaseClient<Database>({
+  cookieOptions: { 
+    path: "/", 
+    domain: undefined,
+    secure: true, 
+    sameSite: "lax" 
+  },
+});

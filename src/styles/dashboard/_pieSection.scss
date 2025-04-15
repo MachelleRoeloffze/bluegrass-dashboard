@@ -33,18 +33,15 @@
     flex: 1 1 260px;
     min-width: 0;
 
-    /* Mobile adjustments */
-    @include respond-to(xs, max) {
-      flex: 1 1 100%;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+    @include respond-to(tablet, max) {
+      flex: 1 1 45%;
+      gap: 2%;
     }
 
-    /* Tablet adjustments */
-    @include respond-to(tablet, max) {
-      flex: 1 1 45%; 
-      gap: 2%; 
+    @include respond-to(xs, max) {
+      flex: 1 1 100%;
+      align-items: center;
+      text-align: center;
     }
   }
 }

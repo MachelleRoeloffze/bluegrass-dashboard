@@ -1,10 +1,29 @@
+@use "../utils/mixins" as *;
+@use "../utils/breakpoints" as *;
 .profile {
   padding: 32px;
+
+  @include respond-to(tablet, max) {
+    padding: 24px;
+  }
+
+  @include respond-to(xm, max) {
+    padding: 16px;
+  }
 
   &__heading {
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 24px;
+
+    @include respond-to(tablet, max) {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    @include respond-to(xm, max) {
+      font-size: 18px;
+    }
   }
 
   &__card {
@@ -15,19 +34,45 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+
+    @include respond-to(tablet, max) {
+      padding: 16px;
+    }
+
+    @include respond-to(xm, max) {
+      padding: 12px;
+    }
   }
 
   &__info {
     display: flex;
     align-items: center;
     gap: 16px;
+
+    @include respond-to(xm, max) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
   }
 
-  &__avatar img {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    object-fit: cover;
+  &__avatar {
+    img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+
+      @include respond-to(tablet, max) {
+        width: 56px;
+        height: 56px;
+      }
+
+      @include respond-to(xm, max) {
+        width: 48px;
+        height: 48px;
+      }
+    }
   }
 
   &__details {
@@ -35,17 +80,38 @@
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 4px;
+
+      @include respond-to(tablet, max) {
+        font-size: 16px;
+      }
+
+      @include respond-to(xm, max) {
+        font-size: 15px;
+      }
     }
 
     .profile__email {
       font-size: 14px;
       color: #777;
+
+      @include respond-to(tablet, max) {
+        font-size: 13px;
+      }
+
+      @include respond-to(xm, max) {
+        font-size: 12px;
+      }
     }
   }
 
   &__stats {
     display: flex;
     gap: 32px;
+
+    @include respond-to(tablet, max) {
+      flex-direction: column;
+      gap: 16px;
+    }
 
     .profile__stat {
       flex: 1;
@@ -60,6 +126,10 @@
         font-size: 16px;
         font-weight: 500;
         color: #333;
+
+        @include respond-to(xm, max) {
+          font-size: 15px;
+        }
       }
     }
   }

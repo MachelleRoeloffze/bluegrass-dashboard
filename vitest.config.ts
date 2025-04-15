@@ -6,9 +6,10 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./vitest.setup.ts",
-    include: ["__tests__/**/*.test.tsx", "tests/**/*.test.tsx"],
+    include: ["__tests__/**/*.test.{ts,tsx}", "tests/**/*.test.{ts,tsx}"],
 
     deps: {
+      inline: [/supabase/],
     },
   },
   resolve: {
@@ -16,8 +17,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
-
   esbuild: {
-    jsx: "automatic", 
+    jsx: "automatic",
   },
 });

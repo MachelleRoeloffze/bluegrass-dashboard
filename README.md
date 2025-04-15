@@ -3,10 +3,10 @@
 A modern full-stack dashboard application built with:
 
 - ✅ Next.js 13 App Router
-- 🔐 Supabase Authentication with Google OAuth
+- 🔐 Supabase email/password authentication (no OAuth)
 - 🧠 PostgreSQL via Supabase for persistent storage
 - 🧱 Modular components, clean architecture, and custom SCSS styling
-- 🧪 TypeScript everywhere
+- 🧪 TypeScript throughout
 
 ---
 
@@ -14,15 +14,11 @@ A modern full-stack dashboard application built with:
 
 ```
 bluegrass-dashboard/
-├── .next/                         # Build artifacts (auto-generated)
-├── node_modules/                  # Project dependencies
+├── .next/                         # Build artifacts
+├── node_modules/                  # Dependencies
 ├── public/                        # Static assets
 │   ├── fonts/
-│   │   ├── icomoon.eot
-│   │   ├── icomoon.svg
-│   │   ├── icomoon.ttf
-│   │   └── icomoon.woff
-│   └── images/                    # Image assets
+│   └── images/
 ├── src/
 │   ├── app/
 │   │   ├── (dashboard)/           # Authenticated dashboard routes
@@ -31,32 +27,28 @@ bluegrass-dashboard/
 │   │   │   ├── profile/
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
-│   │   ├── api/                   # API route handlers
+│   │   ├── api/                   # API routes
 │   │   │   ├── auth/
-│   │   │   │   ├── callback/
-│   │   │   │   │   └── page.tsx
 │   │   │   ├── login/
-│   │   │   │   └── page.tsx
 │   │   │   └── logout/
-│   │   │       └── page.tsx
 │   │   ├── login/
-│   │   │   └── page.tsx
-│   │   ├── layout.tsx             # Root layout
+│   │   ├── signup/
+│   │   ├── forgot-password/
+│   │   ├── reset-password/
 │   │   ├── logout.tsx
-│   │   └── not-found.tsx
-│   ├── components/                # Reusable UI components
+│   │   ├── not-found.tsx
+│   │   └── layout.tsx             # Root layout
+│   ├── components/                # Reusable UI
 │   │   └── common/
-│   │       ├── Badge.tsx
-│   │       └── Card.tsx
-│   ├── context/                   # React context (e.g. auth/user)
-│   ├── data/                      # Mock data (optional)
-│   ├── hooks/                     # Custom React hooks
-│   ├── lib/                       # Utility functions (e.g., Supabase client, logging)
-│   ├── store/                     # Global state (if Redux/Zustand used)
-│   ├── styles/                    # SCSS modules
-│   ├── types/                     # TypeScript types (e.g., Practice, Supabase)
-│   └── utils/                     # Global utility helpers
-├── .env.local                     # Environment variables
+│   ├── context/                   # React context (e.g. user)
+│   ├── data/                      # Static/mock data
+│   ├── hooks/                     # Custom hooks
+│   ├── lib/                       # Utils (e.g., supabaseClient)
+│   ├── store/                     # Zustand/Redux state
+│   ├── styles/                    # SCSS stylesheets
+│   ├── types/                     # Type definitions
+│   └── utils/                     # Global utilities
+├── .env.local                     # Env variables
 ├── next.config.ts
 ├── package.json
 ├── tsconfig.json
@@ -68,35 +60,41 @@ bluegrass-dashboard/
 ## 🚀 Getting Started
 
 1. **Install dependencies**  
-   `npm install`
+   ```bash
+   npm install
+   ```
 
 2. **Set environment variables** in `.env.local`:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=...
-NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-```
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=...
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+   ```
 
 3. **Run locally**  
-   `npm run dev`
+   ```bash
+   npm run dev
+   ```
 
-4. **Login via Google** (OAuth must be configured in Supabase & Google Console)
+4. **Login with email/password**  
+   Authentication is handled by Supabase with custom login and signup pages.
 
 ---
 
 ## ✅ Features
 
-- Google OAuth via Supabase
-- Reusable SCSS-styled components
-- CRUD for "Practices"
-- Logs user actions to Supabase `logs` table
-- Responsive layout and clean dashboard UI
+- Supabase authentication (email/password)
+- Reusable SCSS-styled UI components
+- CRUD for "Practices" module
+- User activity logs stored in Supabase `logs` table
+- Responsive, clean dashboard layout
+- Custom 404 page with animated UI
 
 ---
 
 ## 📦 Deployment
 
-This app is Vercel-ready. Push to GitHub + link to Vercel = 🚀
+This app is Vercel-ready:  
+Just push to GitHub and link the repo on [vercel.com](https://vercel.com).
 
 ---
 

@@ -1,64 +1,54 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
-interface PieCardProps {
+type PieCardProps = {
   percent: number;
-  color: string;
   statusText: string;
-}
+  color: string;
+};
 
-export default function PieCard({ percent, color, statusText }: PieCardProps) {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setProgress(percent), 100);
-    return () => clearTimeout(timeout);
-  }, [percent]);
-
-  const radius = 36;
-  const stroke = 8;
-  const normalizedRadius = radius - stroke / 2;
-  const circumference = 2 * Math.PI * normalizedRadius;
-  const strokeDashoffset = circumference - (progress / 100) * circumference;
+export default function PieCard({ percent, statusText, color }: PieCardProps) {
+  const options: Highcharts.Options = {
+    chart: {
+      type: "pie",
+      height: 120,
+      width: 120,
+      backgroundColor: "transparent",
+    },
+    title: {
+      verticalAlign: "middle",
+      floating: true,
+      text: `<div style="font-size:14px;font-weight:600;color:#333">${percent}%</div>`,
+      useHTML: true,
+    },
+    tooltip: { enabled: false },
+    plotOptions: {
+      pie: {
+        dataLabels: { enabled: false },
+        borderWidth: 0,
+        size: "90%", 
+        innerSize: "70%",
+        center: ["50%", "50%"],
+        states: { inactive: { enabled: false } },
+      },
+    },
+    series: [
+      {
+        type: "pie",
+        data: [
+          { name: statusText, y: percent, color },
+          { name: "Remaining", y: 100 - percent, color: "#F0F2F5" },
+        ],
+      },
+    ],
+    credits: { enabled: false },
+  };
 
   return (
     <div className="pie-card">
-      <svg className="pie-card__svg" height={radius * 2} width={radius * 2}>
-        <circle
-          stroke="#eee"
-          fill="none"
-          strokeWidth={stroke}
-          r={normalizedRadius}
-          cx={radius}
-          cy={radius}
-        />
-        <circle
-          stroke={color}
-          fill="none"
-          strokeWidth={stroke}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          r={normalizedRadius}
-          cx={radius}
-          cy={radius}
-          style={{
-            transition: "stroke-dashoffset 0.6s ease-out",
-          }}
-        />
-        <text
-          x="50%"
-          y="50%"
-          textAnchor="middle"
-          dy="0.35em"
-          fontSize="14"
-          fill="#333"
-          fontWeight="600"
-        >
-          {percent}%
-        </text>
-      </svg>
+      <HighchartsReact highcharts={Highcharts} options={options} />
       <div className="pie-card__info">
         <p className="pie-card__value">{percent}%</p>
         <span className="pie-card__status">{statusText}</span>
